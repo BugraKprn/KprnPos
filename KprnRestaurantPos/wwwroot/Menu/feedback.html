@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+<body ng-app="app" class="ng-scope">
+    <div data-ui-view="" class="ng-scope">
+        <app class="ng-scope ng-isolate-scope"><!-- uiView: header -->
+            <div data-ui-view="header" class="cmp-pc cmp-width position-absolute ng-scope" style="width: 100%">
+                <header class="ng-scope ng-isolate-scope">
+                    <nav class="navbar navbar-light text-white app-header theme-primary-bg-0">
+                        <a href="./index.html"><i class="fa fa-arrow-left black cursor-hand theme-primary-text-0"></i></a>
+                        <!-- Middle header title -->
+                        <div class="pl-0 text-center middle-h">
+                            <span class="mb-0 mx-auto header__text theme-primary-text-0">COFFEA TURKEY</span>
+                        </div>
+                        <a class="m-l-20 ng-scope" href="./feedback.html">
+                            <svg class="theme-primary-fill-0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1zM4 8h12v8h-5.277L7 18.234V16H4V8z"></path>
+                                <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path>
+                            </svg>
+                        </a>
+                    </nav>
+                </header>
+            </div>
+            <div id="den" class="cmp-pc p-16 duv cmp-box-shadow-2 theme-primary-bg-0" style="padding-top: 76px !important;min-height: 100%">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope"><feedback class="ng-scope ng-isolate-scope"><div class="p-r-15 p-l-15">
+                    <!-- Description -->
+                    <div class="row feedback-name-row d-flex flex-row">
+                        <img class="position-fixed m-t-22 m-l-15" style="width: 14px" src="./assets/img/user_icon.svg">
+                        <input id="name" style="width: 100%" class="name-area m-t-10 p-l-40 p-t-5 p-b-5 p-r-10" placeholder="Ad Soyad">
+                    </div>
+                    <!-- Menu -->
+                    <div class="row feedback-menu-row feedback-border-bottom" ng-class="{'feedback-border-bottom':QrMenuThemeColor === 0}">
+                        <div class="col-6 feedback theme-primary-text-0">
+                            Menü
+                        </div>
+                        <div class="col-6 text-right ng-isolate-scope" star-rating="" rating-value="ratings[0].current" max="5" on-rating-selected="getSelectedRating(rating)"><ul class="rating"><!-- ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --></ul></div>
+                    </div>
+                
+                    <!-- Price -->
+                    <div class="row feedback-price-row feedback-border-bottom" ng-class="{'feedback-border-bottom':QrMenuThemeColor === 0}">
+                        <div class="col-6 feedback theme-primary-text-0">
+                            Fiyat
+                        </div>
+                        <div class="col-6 text-right ng-isolate-scope" star-rating="" rating-value="ratings[1].current" max="5" on-rating-selected="getSelectedRating(rating)"><ul class="rating"><!-- ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --></ul></div>
+                    </div>
+                
+                    <!-- Service -->
+                    <div class="row feedback-service-row feedback-border-bottom" ng-class="{'feedback-border-bottom':QrMenuThemeColor === 0}">
+                        <div class="col-6 feedback theme-primary-text-0">
+                            Servis
+                        </div>
+                        <div class="col-6 text-right ng-isolate-scope" star-rating="" rating-value="ratings[2].current" max="5" on-rating-selected="getSelectedRating(rating)"><ul class="rating"><!-- ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --></ul></div>
+                    </div>
+                
+                    <!-- Courtesy -->
+                    <div class="row feedback-courtesy-row feedback-border-bottom" ng-class="{'feedback-border-bottom':QrMenuThemeColor === 0}">
+                        <div class="col-6 feedback theme-primary-text-0">
+                            Nezaket
+                        </div>
+                        <div class="col-6 text-right ng-isolate-scope" star-rating="" rating-value="ratings[3].current" max="5" on-rating-selected="getSelectedRating(rating)"><ul class="rating"><!-- ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --></ul></div>
+                    </div>
+                
+                    <!-- Environment -->
+                    <div class="row feedback-environment-row feedback-border-bottom" ng-class="{'feedback-border-bottom':QrMenuThemeColor === 0}">
+                        <div class="col-6 feedback theme-primary-text-0">
+                            Ortam
+                        </div>
+                        <div class="text-right col-6 ng-isolate-scope" star-rating="" rating-value="ratings[4].current" max="5" on-rating-selected="getSelectedRating(rating)"><ul class="rating"><!-- ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope filled $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --><li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)" class="ng-scope $$hashKey">★</li><!-- end ngRepeat: star in stars --></ul></div>
+                    </div>
+                
+                    <!-- Description -->
+                    <div class="row m-10">
+                        <textarea id="description" class="description-textarea primary-modal-bg-0" placeholder="Açıklama" rows="4"></textarea>
+                    </div>
+                
+                    <a data-target=".feedback-success-popup" data-toggle="modal" data-dismiss="modal">
+                        <button class="send_bt btn btn-default send-button m-b-25 p-0 button-ten-bg-0" data-ng-click="sendRate()">GÖNDER
+                        </button>
+                    </a>
+                
+                    <!-- Feedback Success Popup -->
+                    <div class="modal fade feedback-success-popup">
+                        <div class="modal-dialog modal-dialog-centered" style="justify-content: center;">
+                            <div class="modal-content b-r-20 primary-modal-bg-0" style="align-items: center;width: 70%;">
+                                <img class="height-100 m-t-48 lazy-load" data-src="../../../assets/img/icon/order-popup.png">
+                                <div class="modal-div-style m-48">
+                                    <h5 class="result-text-style text-center ng-binding">
+                                        Geri bildiriminiz için teşekkür ederiz.
+                                    </h5>
+                                    <button type="button" class="btn btn-danger popup-modal-button-style primary-modal-button-bg-0" ng-click="onClickOKAtSuccessPopup()">
+                                        Tamam
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </feedback></div>
+            </div>
+        </app>
+    </div>
+</body>
+</html>

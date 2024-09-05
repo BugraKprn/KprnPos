@@ -1,0 +1,98 @@
+﻿@using Entity.Layer.Concrete
+@model List<Category>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kprn | Menu</title>
+    <link rel="stylesheet" href="~/Menu/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+<body ng-app="app" class="ng-scope">
+    <div data-ui-view="" class="ng-scope">
+        <app class="ng-scope ng-isolate-scope">
+            <!-- uiView: header -->
+            <div data-ui-view="header" class="cmp-pc cmp-width position-absolute ng-scope" style="width: 100%">
+                <header class="ng-scope ng-isolate-scope">
+                    <nav class="navbar navbar-light text-white app-header theme-primary-bg-0">
+                        <a href="/Menu/"><i class="fa fa-arrow-left black cursor-hand theme-primary-text-0"></i></a>
+                        <!-- Middle header title -->
+                        <div class="pl-0 text-center middle-h">
+                            <span class="mb-0 mx-auto header__text theme-primary-text-0">Cross Coffe</span>
+                        </div>
+                        <a class="m-l-20 ng-scope" href="./feedback.html">
+                            <svg class="theme-primary-fill-0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1zM4 8h12v8h-5.277L7 18.234V16H4V8z"></path>
+                                <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path>
+                            </svg>
+                        </a>
+                    </nav>
+                </header>
+            </div>
+            <div id="den" class="cmp-pc p-16 duv cmp-box-shadow-2 theme-primary-bg-0" style="padding-top: 76px !important;min-height: 100%">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope">
+                    <categories class="ng-scope ng-isolate-scope">
+                        <div data-ui-view="" class="ng-scope">
+                            <category-list class="ng-scope ng-isolate-scope">
+                                <div class="category-list">
+                                    <!-- ngRepeat: row in rowChunk -->
+                                    <div class="row category-list__row ng-scope" ng-repeat="row in rowChunk">
+                                        @foreach (var item in Model.Where(x => x.CategoryStatus == true).OrderBy(y => y.CategoryOrder))
+                                        {
+                                            <div class="col-md-6 category-list__col ng-scope" ng-repeat="category in row">
+                                                <a href="/Menu/Categories/@Url.FriendlyUrl(item.CategoryName + "-" + item.CategoryId)">
+                                                    <div class="card category-list-item ng-isolate-scope" data-category-list-item="" data-data="category">
+                                                        <img alt="@item.CategoryName" class="card-img category-list-item__image ng-isolate-scope" src="~/Menu/assets/img/category/@item.CategoryMenuImage">
+                                                        <div class="card-img-overlay category-list-item__overlay">
+                                                            <p class="card-text category-list-item__text ng-binding">@item.CategoryName</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        }
+                                        <!-- end ngRepeat: category in row -->
+                                    </div>
+                                    <div class="row category-list__row ng-scope" ng-repeat="row in rowChunk">
+                                        <div class="col-md-6 category-list__col ng-scope" ng-repeat="category in row">
+                                            <a data-ui-sref="app.categories.category({categoryId: category.MenuGroupID})" href="/categories/Sicak-kahveler">
+                                                <div class="card category-list-item ng-isolate-scope" data-category-list-item="" data-data="category">
+                                                    <img alt="HOT DRINK" class="card-img category-list-item__image ng-isolate-scope" ng-src="~/Menu/assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/menugroups/06112020121514402x200.jpg" src="https://menuluxstorage.blob.core.windows.net/menugroups/06112020121514402x200.jpg">
+                                                    <div class="card-img-overlay category-list-item__overlay">
+                                                        <p class="card-text category-list-item__text ng-binding">Deneme</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- end ngRepeat: category in row -->
+                                        <div class="col-md-6 category-list__col ng-scope" ng-repeat="category in row">
+                                            <a data-ui-sref="app.categories.category({categoryId: category.MenuGroupID})" href="/categories/Soguk-Kahveler">
+                                                <div class="card category-list-item ng-isolate-scope" data-category-list-item="" data-data="category">
+                                                    <img alt="HOT DRINK" class="card-img category-list-item__image ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/menugroups/06112020121514402x200.jpg" src="https://menuluxstorage.blob.core.windows.net/menugroups/06112020121514402x200.jpg">
+                                                    <div class="card-img-overlay category-list-item__overlay">
+                                                        <p class="card-text category-list-item__text ng-binding">Deneme</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- end ngRepeat: category in row -->
+                                    </div>
+                                    <!-- end ngRepeat: row in rowChunk -->
+                                </div>
+                            </category-list>
+                        </div>
+                    </categories>
+                </div>
+            </div>
+        </app>
+    </div>
+</body>
+</html>

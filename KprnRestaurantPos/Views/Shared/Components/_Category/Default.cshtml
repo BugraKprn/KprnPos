@@ -1,0 +1,29 @@
+﻿@model KprnRestaurantPos.ViewComponents.ProductPage._Category.MenuDto
+
+@{
+    int counter = 0;
+}
+
+<ul class="nav nav-tabs">
+    @foreach (var ctgry in Model.CategoryModel.Where(x => x.CategoryStatus == true).OrderBy(y => y.CategoryOrder))
+    {
+        if (counter == 0)
+        {
+            <li class="nav-item" id="@ctgry.CategoryId">
+                <a class="nav-link active" href="#" data-filter="@ctgry.CategoryId">
+                    <i class="fa fa-fw @ctgry.CategoryIcon" style="color: #869ac0;"></i> @ctgry.CategoryName
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item" id="@ctgry.CategoryId">
+                <a class="nav-link" href="#" data-filter="@ctgry.CategoryId">
+                    <i class="fa fa-fw @ctgry.CategoryIcon" style="color: #869ac0;"></i> @ctgry.CategoryName
+                </a>
+            </li>
+        }
+        @*@await Component.InvokeAsync("_Category")*@
+        counter++;
+    }
+</ul>

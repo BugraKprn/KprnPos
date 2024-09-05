@@ -1,0 +1,120 @@
+﻿@model KprnRestaurantPos.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Giriş";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>Kprn Pos - Giriş</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="~/light/css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="~/light/css/feather.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="~/light/css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="~/light/css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="~/light/css/app-dark.css" id="darkTheme" disabled>
+</head>
+<body class="light ">
+    <div class="wrapper vh-100">
+        <div class="row align-items-center h-100">
+            <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+                <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="/" onclick="return false;">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                         width="300px" height="150px" viewBox="0 0 800.000000 800.000000"
+                         preserveAspectRatio="xMidYMid meet">
+                        <g transform="translate(0.000000,800.000000) scale(0.100000,-0.100000)"
+                           fill="#000000" stroke="none">
+                            <path d="M4786 4684 c-52 -19 -75 -40 -100 -94 -21 -44 -21 -56 -24 -824 -2
+-536 1 -796 8 -832 15 -72 46 -114 104 -143 40 -20 63 -24 135 -24 112 1 168
+23 208 84 l28 43 3 378 3 378 -121 0 -120 0 0 -84 0 -85 36 -3 36 -3 -1 -249
+c-1 -145 -6 -257 -12 -268 -8 -16 -20 -18 -62 -16 -50 3 -53 5 -64 38 -14 43
+-18 1432 -3 1494 10 46 23 56 71 56 68 0 70 -6 72 -286 l2 -249 83 -3 82 -3 0
+274 c0 178 -4 286 -11 308 -20 58 -55 96 -106 113 -58 20 -193 20 -247 0z" />
+                            <path d="M900 3721 l0 -960 83 2 82 2 5 345 5 345 30 60 c17 33 35 59 40 59 6
+-1 21 -23 35 -50 25 -48 25 -53 34 -406 l9 -357 81 2 81 2 3 249 c3 290 -8
+458 -35 536 -11 30 -38 85 -61 122 l-41 67 19 24 c33 41 87 159 101 217 10 39
+13 146 14 375 l0 320 -81 3 -81 3 -7 -323 c-7 -287 -10 -330 -28 -386 -20 -61
+-93 -182 -113 -189 -7 -2 -10 154 -10 444 l0 448 -82 3 -83 3 0 -960z" />
+                            <path d="M1512 3724 l3 -959 80 0 80 0 5 345 c6 402 -10 342 155 585 153 226
+164 267 165 591 0 229 -9 280 -62 331 -51 49 -79 56 -261 61 l-167 4 2 -958z
+m301 755 c15 -19 17 -46 17 -228 -1 -171 -4 -215 -18 -257 -19 -54 -67 -138
+-108 -189 l-24 -30 0 369 0 369 58 -6 c42 -4 62 -12 75 -28z" />
+                            <path d="M2125 4669 c-3 -8 -4 -439 -3 -959 l3 -945 83 -3 82 -3 0 305 c0 188
+4 325 11 358 12 55 51 142 69 153 6 4 22 -19 38 -52 26 -56 27 -63 30 -263 1
+-113 3 -270 5 -350 l2 -145 80 0 80 0 0 370 0 370 -37 77 c-20 42 -48 94 -62
+114 l-25 38 20 30 c44 68 88 165 99 221 7 39 10 148 8 310 -3 242 -4 251 -26
+288 -13 20 -44 49 -69 64 -44 26 -54 27 -214 31 -137 4 -170 2 -174 -9z m273
+-170 c42 -14 44 -30 40 -285 l-3 -210 -32 -64 c-18 -36 -50 -87 -70 -115 l-38
+-50 -3 355 c-1 195 0 361 3 367 5 16 61 17 103 2z" />
+                            <path d="M2740 3721 l0 -960 78 2 77 2 5 500 5 500 28 -185 c16 -102 39 -252
+52 -335 12 -82 33 -215 45 -295 30 -201 23 -189 117 -187 l78 2 0 955 0 955
+-82 3 -83 3 0 -497 c0 -274 -2 -495 -4 -493 -3 3 -37 207 -75 454 -39 248 -74
+468 -78 490 l-8 40 -78 3 -77 3 0 -960z" />
+                            <path d="M3762 3724 l3 -959 160 1 c139 0 166 3 206 21 53 24 92 70 108 128
+15 54 15 1541 0 1605 -13 58 -49 105 -102 132 -37 19 -62 22 -210 26 l-167 4
+2 -958z m297 761 c14 -14 16 -93 16 -765 0 -850 8 -779 -86 -783 l-54 -2 -3
+789 -2 789 57 -6 c31 -3 63 -13 72 -22z" />
+                            <path d="M4375 4668 c-3 -7 -4 -438 -3 -958 l3 -945 80 0 80 0 3 958 2 957
+-80 0 c-55 0 -82 -4 -85 -12z" />
+                            <path d="M5282 3723 l3 -958 80 0 80 0 0 955 0 955 -83 3 -82 3 2 -958z" />
+                            <path d="M5570 4596 l0 -85 78 -3 77 -3 5 -870 5 -870 80 0 80 0 5 870 5 870
+78 3 78 3 -3 82 -3 82 -242 3 -243 2 0 -84z" />
+                            <path d="M6277 4673 c-3 -5 -8 -75 -11 -158 -4 -82 -13 -262 -21 -400 -8 -137
+-21 -392 -30 -565 -9 -173 -22 -418 -29 -545 -7 -126 -12 -233 -10 -237 2 -3
+37 -6 78 -7 l74 -1 7 68 c10 105 28 155 91 249 l59 88 8 -150 c4 -82 10 -174
+13 -202 l5 -53 75 0 74 0 0 53 c0 48 -5 152 -45 902 -8 154 -22 415 -30 580
+-9 165 -18 319 -21 343 l-5 42 -139 0 c-76 0 -141 -3 -143 -7z m168 -749 c21
+-408 19 -460 -19 -534 -16 -30 -38 -66 -49 -80 l-20 -25 6 90 c3 50 16 290 29
+535 15 291 25 428 29 395 4 -27 15 -199 24 -381z" />
+                            <path d="M6792 3723 l3 -958 155 0 155 0 0 85 0 85 -72 3 -73 3 -2 867 -3 867
+-83 3 -82 3 2 -958z" />
+                        </g>
+                    </svg>
+                </a>
+                <h1 class="h6 mb-3">Giriş Yapmak için bilgilerinizi giriniz !</h1>
+                <div class="form-group">
+                    <input type="text" asp-for="Username" class="form-control form-control-lg" placeholder="Kullanıcı Adı" required="" autofocus="">
+                </div>
+                <div class="form-group">
+                    <input type="password"  asp-for="Password" class="form-control form-control-lg" placeholder="Şifre" required="">
+                </div>
+                <button class="btn btn-lg btn-danger" type="submit">Giriş Yap</button>
+                <p class="mt-5 mb-3 text-muted">© 2023 - @DateTime.UtcNow.Year</p>
+            </form>
+        </div>
+    </div>
+    <script src="~/light/js/jquery.min.js"></script>
+    <script src="~/light/js/popper.min.js"></script>
+    <script src="~/light/js/moment.min.js"></script>
+    <script src="~/light/js/bootstrap.min.js"></script>
+    <script src="~/light/js/simplebar.min.js"></script>
+    <script src="~/light/js/daterangepicker.js"></script>
+    <script src="~/light/js/jquery.stickOnScroll.js"></script>
+    <script src="~/light/js/tinycolor-min.js"></script>
+    <script src="~/light/js/config.js"></script>
+    <script src="~/light/js/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-56159088-1');
+    </script>
+</body>
+</html>

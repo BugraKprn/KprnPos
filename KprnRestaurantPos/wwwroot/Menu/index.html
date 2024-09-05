@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+<body ng-app="app" class="ng-scope">
+    <div id="den" class="cmp-pc p-16 duv cmp-box-shadow-2 theme-primary-bg-0" style="padding-top: 76px !important;min-height: 100%">
+        <!-- uiView: -->
+        <div data-ui-view="" class="ng-scope">
+            <div class="ng-scope ng-isolate-scope">
+                <div class="login">
+                    <div style="display: flex;flex-direction: column;" class="cmp-pc"></div>
+                    <div class="customer-place cmp-pc theme-primary-bg-0 m-t-n-46">
+                        <!-- Customer Image -->
+                        <div class="p-7 brand-icon-background customerimgurlsize">
+                            <div class="p-7 brand-icon-background-2">
+                                <div class="p-0 brand-icon-background-3">
+                                    <img class="full-width full-height" style="border-radius:100%" src="./assets/img/firstpage.jpg">
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="font-poppins f-s-20 f-w-600 text-center m-b-5 m-t-20 cmp-pc p-r-5 p-l-5 theme-primary-text-0" style="color: #2f2f2f";>Cross Coffee</h6>
+                        <h6 class="font-poppins m-b-5 f-s-18 f-w-400 text-center m-0 theme-primary-text-0" style="opacity: .8">Hoşgeldiniz</h6>
+                        <div class="text-center menu-button">
+                            <!-- Go to Menu-->
+                            <a class="b-r-100 m-t-30 m-b-20 font-poppins f-s-20 menu-button-style cursor-hand button-primary-bg-0" href="./categories.html">
+                                Menüye Git
+                            </a>
+                        </div>
+                        <div ng-if="facebook.length > 0 &amp;&amp; facebook !== null &amp;&amp; facebook !== '' || instagram.length > 0 &amp;&amp; instagram !== null &amp;&amp; instagram !== ''" class="ng-scope">
+                            <div class="d-flex justify-content-center">
+                                <a href="" target="_blank" ng-hide="facebook.length === 0" class="ng-hide">
+                                    <img src="./assets/img/facebook.png" class="height-34 p-3">
+                                </a>
+                                <a href="www.instagram.com/everhoteleurope" target="_blank" ng-hide="instagram.length === 0">
+                                    <img src="./assets/img/instagram.png" class="height-34 p-3">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

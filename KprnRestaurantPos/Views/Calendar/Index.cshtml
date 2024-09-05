@@ -1,0 +1,102 @@
+﻿@using Entity.Layer.Concrete
+@{
+    ViewData["Title"] = "Takvim ve Etkinlikler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="row align-items-center w-100">
+                <div class="col-lg-10 col-sm-12">
+                    <h3 class="page-title">Takvim</h3>
+                </div>
+                <div class="col-lg-2 col-sm-12">
+                    <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_event">Create Event</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-8">
+                <div class="card bg-white">
+                    <div class="card-body">
+                        <div id="KprnCalendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_event" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Etkinlik ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Etkinlik Adı <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Başlangıç Tarihi <span class="text-danger">*</span></label>
+                        <div class="cal-icon">
+                            <input class="form-control " type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Bitiş Tarihi <span class="text-danger">*</span></label>
+                        <div class="cal-icon">
+                            <input class="form-control " type="text">
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    var events = [];
+    @foreach (var etkinlik in Model)
+    {
+        <text>
+                events.push({
+                    title: '@Html.Raw(etkinlik.ActivityType.Replace("'", "\\'"))',
+                    description: '@Html.Raw(etkinlik.ActivityName.Replace("'", "\\'"))',
+                    start: '@etkinlik.StartDate',
+                    end: '@etkinlik.EndDate',
+                    color: '@etkinlik.Color'
+                });
+        </text>
+    }
+
+        var calendarEl = document.getElementById('KprnCalendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            // Takvim ayarları
+            editable: false, // Etkinliklerin sürüklenip bırakılabilir olmasını sağlar
+            droppable: false, // Dış kaynaklardan etkinlikleri takvime sürükleyip bırakmayı sağlar
+            locale: 'tr',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            events: events,
+
+        });
+        calendar.render();
+    });
+
+</script>
+
+

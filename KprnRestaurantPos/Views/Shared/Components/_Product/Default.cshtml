@@ -1,0 +1,33 @@
+﻿@model KprnRestaurantPos.ViewComponents.ProductPage._Product.MenuDto
+
+@* @{
+    int count = 0;
+} *@
+
+
+
+
+<!-- Ürünlerin listelendiği bölüm -->
+<div class="pos-content">
+    <div class="pos-content-container h-100">
+        <div class="row gx-4">
+            @foreach (var itemx in Model.CategoryModel)
+            {
+                @foreach (var prdct in Model.ProductModel.Where(x => x.CategoryId == itemx.CategoryId))
+                {
+                    <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-4 col-sm-6 pb-4 active" data-type="@prdct.CategoryId">
+                        <a href="#" onclick="showDetails(@prdct.ProductId)" class="pos-product">
+                            <div class="img" style="background-image: url(/Pos2/assets/img/pos/@prdct.ProductImage)"></div>
+                            <div class="info">
+                                <input type="hidden" class="id" value="@prdct.ProductId" />
+                                <div class="title">@prdct.ProductName</div>
+                                <div class="desc">@prdct.ProductDescription</div>
+                                <div class="price">@prdct.ProductPrice TL</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,545 @@
+﻿@using static KprnRestaurantPos.Controllers.PosController
+@model MenuDto
+
+@{
+    Layout = null;
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>KPRN | POS - Sipariş Sistemi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Müşteri Sipariş Sistemi">
+    <meta name="author" content="KprnDigital">
+
+    <link href="~/Pos2/assets/css/vendor.min.css" rel="stylesheet">
+    <link href="~/Pos2/assets/css/app.min.css" rel="stylesheet">
+    <style>
+
+        .custom-accordion .accordion-header {
+            margin-top: 2px;
+            margin-right: 3px;
+            margin-left: 3px;
+            background-color: #f8f9fa; /* Accordion başlık rengi */
+            color: #000; /* Accordion başlık yazı rengi */
+        }
+
+        .custom-accordion .accordion-button {
+            background-color: #ebeef4; /* Buton rengi */
+            color: #000; /* Buton yazı rengi */
+            border: 1px solid #A9A9A9;
+            border-radius: 6px;
+            box-shadow: none !important; /* Gölgeyi kaldırır */
+            outline: none; /* Tıklandığında görünen kenarlığı kaldırır */
+        }
+
+            .custom-accordion .accordion-button:not(.collapsed) {
+                box-shadow: none !important; /* Tıklandığında ve genişletildiğinde gölgeyi kaldırır */
+            }
+
+            .custom-accordion .accordion-button:focus {
+                box-shadow: none !important; /* Odaklandığında gölgeyi kaldırır */
+            }
+
+            .custom-accordion .accordion-button:active {
+                box-shadow: none !important; /* Tıklanma sırasında gölgeyi kaldırır */
+            }
+
+            .custom-accordion .accordion-button.collapsed {
+                background-color: #ebeef4; /* Kapatılmış buton rengi */
+                color: #000; /* Kapatılmış buton yazı rengi */
+            }
+
+        .custom-accordion .accordion-body {
+            margin-right: 3px;
+            margin-left: 3px;
+            border: 1px solid #A9A9A9;
+            border-radius: 6px;
+            background-color: #E5E4E2; /* Accordion gövde rengi */
+            color: #000; /* Accordion gövde yazı rengi */
+        }
+
+    </style>
+
+
+</head>
+<body class="pace-done pace-top theme-green">
+
+    <div id="app" class="app app-content-full-height app-without-sidebar app-without-header">
+
+        <div id="content" class="app-content p-0">
+
+            <div class="pos pos-with-menu pos-with-sidebar" id="pos">
+                <div class="pos-container">
+
+                    <div class="pos-menu">
+
+                        <div class="logo">
+                            <a href="/Pos">
+                                <div class="logo-img"><i class="fa fa-bowl-rice"></i></div>
+                                <div class="logo-text">Kprn &amp; Pos</div>
+                            </a>
+                        </div>
+
+                        <div class="nav-container">
+                            <div class="h-100 ps ps--active-y" data-scrollbar="true" data-skip-mobile="true">
+                                <ul class="nav nav-tabs">
+                                    @await Component.InvokeAsync("_Category")
+                                </ul>
+                                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 621px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 616px;"></div></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    @await Component.InvokeAsync("_Product")
+
+
+                    <div class="pos-sidebar" id="pos-sidebar">
+                        <div class="h-100 d-flex flex-column p-0">
+
+                            <div class="pos-sidebar-header">
+                                <div class="back-btn">
+                                    <button type="button" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos" class="btn">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                </div>
+                                <div class="icon"><i class="fa fa-plate-wheat"></i></div>
+                                <div class="title">Masa: @ViewBag.TableName</div>
+                                <input type="hidden" id="tableId" value="@ViewBag.TableId" />
+                                <div class="order small">Sipariş No: <span class="fw-semibold" id="SipNo">#0000</span></div>
+                            </div>
+
+
+                            <div class="pos-sidebar-nav small">
+                                <ul class="nav nav-tabs nav-fill" id='tab-list' role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="yeni-siparis" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab" aria-selected="true" role="tab">Yeni Sipariş (0)</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="siparis-gecmisi" onclick="GetOrderHistory(@ViewBag.TableId)" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab" aria-selected="false" tabindex="-1" role="tab">Sipariş Geçmişi (@ViewBag.SipCount)</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="pos-sidebar-body tab-content ps ps--active-y" data-scrollbar="true" data-height="100%" style="height: 100%;">
+
+                                <div class="tab-pane fade h-100 show active" id="newOrderTab" role="tabpanel"></div>
+                                <div class="tab-pane fade h-100" id="orderHistoryTab" role="tabpanel"></div>
+
+                                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 401px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 204px;"></div></div>
+                            </div>
+
+
+                            <div class="pos-sidebar-footer">
+                                <div class="mt-3">
+                                    <div class="d-flex">
+                                        <a href="#" onclick="addToOrder()" class="btn btn-theme flex-fill d-flex align-items-center justify-content-center">
+                                            <span>
+                                                <i class="fa fa-cash-register fa-lg my-10px d-block"></i>
+                                                <span class="small fw-semibold">Siparişi Onayla</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal modal-pos fade" id="modalPosItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0">
+                <a href="#" data-bs-dismiss="modal" class="btn-close position-absolute top-0 end-0 m-4"></a>
+                <div class="modal-pos-product">
+                    <div class="modal-pos-product-img">
+                        <div class="img" id="prdctImage" style="background-image: url(./pos2/assets/img/pos/product-1.jpg)"></div>
+                    </div>
+                    <div class="modal-pos-product-info">
+                        <div class="fs-4 fw-semibold" id="prdctName">Grill Chicken Chop</div>
+                        <div class="text-body text-opacity-50 mb-2" id="prdctDesc">
+                            chicken, egg, mushroom, salad
+                        </div>
+                        <div class="fs-3 fw-bold mb-3" id="prdctPrice">$10.99</div>
+                        <div class="d-flex mb-3">
+                            <a href="#" class="btn btn-secondary" id="btnQtyDecrease"><i class="fa fa-minus"></i></a>
+                            <input type="text" class="form-control w-50px fw-bold text-center" id="qtyInput" name="qty" value="1">
+                            <a href="#" class="btn btn-secondary" id="btnQtyIncrease"><i class="fa fa-plus"></i></a>
+                        </div>
+                        <hr class="opacity-1">
+                        <div class="mb-2">
+                            <div class="fw-bold">Size:</div>
+                            <div class="option-list">
+                                <div class="option">
+                                    <input type="radio" id="size3" name="size" class="option-input" checked="">
+                                    <label class="option-label" for="size3">
+                                        <span class="option-text">Küçük</span>
+                                        <span class="option-price">+0.00</span>
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="size1" name="size" class="option-input">
+                                    <label class="option-label" for="size1">
+                                        <span class="option-text">Büyük</span>
+                                        <span class="option-price">+3.00</span>
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="size2" name="size" class="option-input">
+                                    <label class="option-label" for="size2">
+                                        <span class="option-text">Orta</span>
+                                        <span class="option-price">+1.50</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="fw-bold">Add On:</div>
+                            <div class="option-list">
+                                <div class="option">
+                                    <input type="checkbox" name="addon[sos]" value="true" class="option-input" id="addon1">
+                                    <label class="option-label" for="addon1">
+                                        <span class="option-text">More BBQ sos</span>
+                                        <span class="option-price">+0.00</span>
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" name="addon[ff]" value="true" class="option-input" id="addon2">
+                                    <label class="option-label" for="addon2">
+                                        <span class="option-text">Extra french fries</span>
+                                        <span class="option-price">+1.00</span>
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" name="addon[ms]" value="true" class="option-input" id="addon3">
+                                    <label class="option-label" for="addon3">
+                                        <span class="option-text">Mushroom soup</span>
+                                        <span class="option-price">+3.50</span>
+                                    </label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" name="addon[ms]" value="true" class="option-input" id="addon4">
+                                    <label class="option-label" for="addon4">
+                                        <span class="option-text">Lemon Juice (set)</span>
+                                        <span class="option-price">+2.50</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="opacity-1">
+                        <div class="row">
+                            <div class="col-4">
+                                <a href="#" class="btn btn-default fw-semibold mb-0 d-block py-3" data-bs-dismiss="modal">İptal</a>
+                            </div>
+                            <div class="col-8">
+                                <a href="#" class="btn btn-theme fw-semibold d-flex justify-content-center align-items-center py-3 m-0" id="addToSession">Sepete Ekle <i class="fa fa-plus ms-2 my-n3"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function showDetails(productId) {
+
+            $.ajax({
+                url: '/Pos/GetProductDetails',
+                method: 'GET',
+                data: { productId: productId },
+                success: function (data) {
+
+                    $('#prdctName').text(data.productName);
+                    $('#prdctDesc').text(data.productDescription);
+                    $('#prdctPrice').text(data.productPrice);
+                    var imagePath = '/Pos2/assets/img/pos/' + data.productImage;
+                    $('#prdctImage').css('background-image', 'url(' + imagePath + ')');
+
+                    var tableId = @ViewBag.TableId;
+                    $('#addToSession').attr('onclick', 'addToSession(' + tableId + ', ' + productId + ')');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+
+            $('#modalPosItem').modal('show');
+        }
+
+        function addToSession(tableId, productId) {
+            var quantity = $('input[name="qty"]').val();
+            $.ajax({
+                url: '/Pos/AddToSession',
+                type: 'POST',
+                data: { tableId: @ViewBag.TableId, productId: productId, quantity: quantity },
+                success: function (response) {
+                    $('#modalPosItem').modal('hide');
+                    console.log('Ürün Sepete Başarıyla Eklendi.');
+                    updateOrders();
+                },
+                error: function (xhr, status, error) {
+                    alert('Ürün sepete eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            });
+        }
+
+        function updateOrders() {
+            var newOrderTab = document.getElementById('newOrderTab');
+            $.ajax({
+                url: '/Pos/GetOrders',
+                method: 'GET',
+                success: function (data) {
+                    if (data.length > 0) {
+                        var orders = data[0].orderItems;
+                        document.getElementById('SipNo').innerText = `#${data[0].orderNumber}`;
+                        var content = '';
+                        for (var i = 0; i < orders.length; i++) {
+                            var unitPriceFormatted = orders[i].unitPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+                            var rowtotalPrice = orders[i].unitPrice * orders[i].quantity;
+                            var rowTotalPriceFormatted = rowtotalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+                            document.getElementById('yeni-siparis').innerText = `Yeni Sipariş (${orders.length})`;
+                            content += `
+                                                <div class="pos-order">
+                                                    <div class="pos-order-product">
+                                                        <div class="img" style="background-image: url(/pos2/assets/img/pos/${orders[i].productImage})"></div>
+                                                        <div class="flex-1">
+                                                            <div class="h6 mb-1">${orders[i].productName}</div>
+                                                            <div class="small">${unitPriceFormatted}</div>
+                                                            <div class="small mb-2">- size: Standart</div>
+                                                            <div class="d-flex">
+                                                                <a href="#" class="btn btn-secondary btn-sm btn-minus" data-order-id="${orders[i].orderId}" data-product-id="${orders[i].productId}"><i class="fa fa-minus"></i></a>
+                                                                <input type="text" class="form-control w-50px form-control-sm mx-2 bg-white bg-opacity-25 text-center" value="${orders[i].quantity}" readonly>
+                                                                <a href="#" class="btn btn-secondary btn-sm btn-plus" data-order-id="${orders[i].orderId}" data-product-id="${orders[i].productId}"><i class="fa fa-plus"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pos-order-price d-flex flex-column">
+                                                        <div class="flex-1">${rowTotalPriceFormatted}</div>
+                                                        <div class="text-end">
+                                                            <a href="#" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                        }
+
+                        newOrderTab.innerHTML = content;
+
+                        // Arttırma butonları için event handler
+                        document.querySelectorAll('.btn-plus').forEach(button => {
+                            button.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                var orderId = this.getAttribute('data-order-id');
+                                var productId = this.getAttribute('data-product-id');
+                                updateQuantity(orderId, productId, 1); // Miktarı 1 artır
+                            });
+                        });
+
+                        // Azaltma butonları için event handler
+                        document.querySelectorAll('.btn-minus').forEach(button => {
+                            button.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                var orderId = this.getAttribute('data-order-id');
+                                var productId = this.getAttribute('data-product-id');
+                                updateQuantity(orderId, productId, -1); // Miktarı 1 azalt
+                            });
+                        });
+
+                    } else {
+                        newOrderTab.innerHTML = `
+                                                        <div class="h-100 d-flex align-items-center justify-content-center text-center p-20">
+                                                           <div>
+                                                              <div class="mb-3 mt-n5">
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="10em" height="10em" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                                                                    <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                                                       <path d="M1185 2470 c-108 -24 -211 -82 -270 -154 -159 -195 -148 -476 27 -650 268 -267 710 -143 804 225 58 226 -80 484 -297 558 -72 24 -202 35 -264 21z m216 -90 c119 -37 222 -140 259 -259 59 -188 -31 -398 -205 -477 -198 -91 -426 -19 -523 164 -170 320 125 680 469 572z"/>
+                                                                       <path d="M1098 2209 c-34 -19 -20 -51 54 -126 l72 -73 -73 -74 c-56 -57 -72 -79 -69 -97 2 -16 11 -25 27 -27 18 -3 40 13 97 69 l74 73 74 -73 c57 -56 79 -72 97 -69 16 2 25 11 27 27 3 18 -13 40 -69 97 l-73 74 72 73 c76 76 88 108 51 127 -18 10 -29 2 -100 -66 l-80 -78 -77 77 c-43 42 -80 77 -82 77 -3 0 -13 -5 -22 -11z"/>
+                                                                       <path d="M605 1508 c-16 -6 -47 -23 -67 -39 -37 -29 -37 -29 -183 -29 -162 0 -195 -8 -237 -59 -56 -66 -39 -189 32 -229 17 -9 38 -22 46 -27 10 -7 62 -185 135 -455 131 -489 136 -501 224 -555 l48 -30 654 -3 c436 -2 667 1 693 8 56 15 120 68 146 120 13 25 69 216 124 425 56 209 108 403 116 432 13 45 21 55 57 75 80 44 110 159 60 226 -46 62 -61 67 -238 72 -151 5 -165 7 -187 27 -13 12 -43 29 -67 38 -81 28 -156 16 -223 -36 l-37 -29 -420 0 -419 0 -30 25 c-59 49 -156 68 -227 43z m163 -95 c68 -51 87 -121 54 -196 -18 -41 -68 -87 -94 -87 -4 0 -8 30 -10 66 -2 51 -7 70 -20 78 -35 21 -53 -4 -56 -78 -2 -36 -7 -66 -11 -66 -25 0 -78 51 -95 92 -31 76 1 163 74 201 44 23 121 18 158 -10z m1200 0 c68 -51 87 -121 54 -196 -18 -41 -68 -87 -94 -87 -4 0 -8 30 -10 66 -3 74 -21 99 -55 78 -14 -8 -19 -27 -21 -78 -2 -36 -7 -66 -11 -66 -25 0 -78 51 -95 92 -31 76 1 163 74 201 44 23 121 18 158 -10z m-1523 -133 l1 -80 -108 0 c-117 0 -150 9 -167 47 -17 37 -13 62 14 88 23 24 30 25 142 25 l118 0 0 -80z m1200 0 l1 -80 -366 0 -365 0 0 80 0 80 365 0 365 0 0 -80z m730 55 c14 -13 25 -35 25 -49 0 -69 -35 -86 -177 -86 l-108 0 0 80 0 80 118 0 c112 0 119 -1 142 -25z m-1854 -231 c15 -18 82 -54 102 -54 9 0 17 -14 20 -35 8 -50 43 -94 91 -116 38 -17 75 -19 546 -19 471 0 508 2 546 19 48 22 83 66 91 116 3 21 11 35 20 35 19 0 73 28 99 52 18 16 34 18 126 16 l105 -3 -116 -430 c-77 -286 -124 -441 -138 -461 -46 -65 -36 -64 -735 -64 -618 0 -633 0 -674 21 -24 11 -52 35 -63 52 -10 18 -69 221 -131 452 -62 231 -114 423 -117 428 -2 4 45 7 105 7 87 0 112 -3 123 -16z m1200 0 c16 -19 83 -54 104 -54 32 0 14 -55 -26 -75 -23 -13 -108 -15 -519 -15 -503 0 -518 1 -547 39 -17 22 -16 51 2 51 21 0 88 35 104 54 12 14 64 16 441 16 377 0 429 -2 441 -16z"/>
+                                                                       <path d="M818 742 c-49 -30 -58 -65 -58 -224 0 -164 11 -197 77 -225 46 -19 97 -6 134 33 23 24 24 32 27 182 3 131 1 162 -13 188 -32 60 -111 82 -167 46z m90 -74 c8 -8 12 -56 12 -149 0 -152 -7 -173 -55 -151 -25 11 -25 13 -25 150 0 141 5 162 40 162 9 0 21 -5 28 -12z"/>
+                                                                       <path d="M1218 742 c-49 -30 -58 -65 -58 -224 0 -164 11 -197 77 -225 46 -19 97 -6 134 33 23 24 24 32 27 182 3 131 1 162 -13 188 -32 60 -111 82 -167 46z m90 -74 c8 -8 12 -56 12 -149 0 -152 -7 -173 -55 -151 -25 11 -25 13 -25 150 0 141 5 162 40 162 9 0 21 -5 28 -12z"/>
+                                                                       <path d="M1602 726 l-37 -34 -3 -159 c-3 -152 -2 -159 20 -193 27 -39 84 -66 123 -56 14 4 40 19 58 35 l32 29 3 159 c4 175 -3 204 -58 236 -47 28 -95 22 -138 -17z m106 -58 c8 -8 12 -56 12 -149 0 -152 -7 -173 -55 -151 -25 11 -25 13 -25 150 0 141 5 162 40 162 9 0 21 -5 28 -12z"/>
+                                                                    </g>
+                                                                 </svg>
+                                                              </div>
+                                                              <h5>Sepette Ürün bulunmamaktadır !</h5>
+                                                           </div>
+                                                        </div>
+                                                `;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function updateQuantity(orderId, productId, change) {
+            $.ajax({
+                url: '/Pos/UpdateQuantity',
+                method: 'POST',
+                data: {
+                    orderId: orderId,
+                    productId: productId,
+                    change: change
+                },
+                success: function (response) {
+                    if (response.success) {
+                        updateOrders();
+                    } else {
+                        console.error('Quantity (Adet) bilgisi güncellenirken bir hata oluştu.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function addToOrder() {
+            var newOrderTab = document.getElementById('newOrderTab');
+            $.ajax({
+                url: '/Pos/AddToOrder',
+                type: 'POST',
+                success: function (data) {
+                    location.reload();
+                    console.log('Siparişler başarıyla kaydedildi.');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Siparişleri kaydetmede bir hata oluştu:', error);
+                }
+            });
+        }
+
+        function GetOrderHistory(tableId) {
+            $.ajax({
+                type: 'GET',
+                url: '/Pos/GetOrderHistoryByTableId/' + tableId,
+                data: { tableId: tableId },
+                success: function (response) {
+                    if (response.length > 0) {
+                        var orderHistoryHTML = '';
+                        response.forEach(function (order) {
+                            var formattedDate = formatDate(order.orderDate);
+                            orderHistoryHTML += `
+                                                    <div class="accordion custom-accordion" id="accordionExample">
+                                                        <div class="accordion-item">
+                                                            <div class="accordion-header">
+                                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                    Tarih: ${formattedDate}
+                                                                    <br><br>
+                                                                    Sipariş No: #${order.orderNumber}
+                                                                </button>
+                                                            </div>
+                                                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+                                                                    <div class="pos-order">
+                                                                        <div class="pos-order-product">
+                                                                            <div class="img" style="background-image: url(/pos2/assets/img/pos/${order.orderItems[0].productImage})"></div>
+                                                                            <div class="flex-1">
+                                                                                <div class="h6 mb-1">${order.orderItems[0].productName}</div>
+                                                                                <div class="small">${order.orderItems[0].unitPrice}</div>
+                                                                                <div class="d-flex">
+                                                                                    <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-minus"></i></a>
+                                                                                    <input type="text" class="form-control w-50px form-control-sm mx-2 bg-white bg-opacity-25 text-center" value="${order.orderItems[0].quantity}">
+                                                                                    <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                   `;
+                        });
+                        $('#orderHistoryTab').html(orderHistoryHTML);
+                    } if (response.length == 0) {
+                        var OrderHistoryEmptyHTML = `
+                                                                            <div class="h-100 d-flex align-items-center justify-content-center text-center p-20">
+                                                                                <div>
+                                                                                    <div class="mb-3 mt-n5">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="10em" height="10em" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+                                                                                            <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                                                                                <path d="M1241 2541 c-32 -32 -23 -91 20 -137 l21 -22 -86 -3 c-99 -5 -124 -21 -132 -85 -6 -47 12 -84 49 -102 l27 -13 0 -160 0 -161 29 -29 29 -29 242 0 242 0 29 29 29 29 0 161 0 160 27 13 c37 18 55 55 49 102 -8 64 -33 80 -132 85 l-86 3 21 22 c43 46 52 105 20 137 -17 17 -29 20 -61 16 -44 -6 -104 -47 -120 -83 -6 -13 -14 -24 -18 -24 -4 0 -12 11 -18 24 -16 36 -76 77 -120 83 -32 4 -44 1 -61 -16z m104 -91 c3 -5 2 -10 -4 -10 -5 0 -13 5 -16 10 -3 6 -2 10 4 10 5 0 13 -4 16 -10z m210 0 c-3 -5 -11 -10 -16 -10 -6 0 -7 5 -4 10 3 6 11 10 16 10 6 0 7 -4 4 -10z m180 -170 c0 -13 -40 -15 -289 -18 -169 -1 -294 2 -299 7 -28 28 10 31 296 29 252 -3 292 -5 292 -18z m-335 -250 l0 -150 -90 0 -90 0 0 150 0 150 90 0 90 0 0 -150z m260 0 l0 -150 -90 0 -90 0 0 150 0 150 90 0 90 0 0 -150z"/>
+                                                                                                <path d="M523 2416 c-58 -26 -87 -98 -64 -160 9 -23 7 -25 -31 -38 -23 -7 -50 -25 -61 -40 l-20 -27 56 -283 c62 -308 68 -323 129 -321 18 1 139 35 268 77 242 77 270 91 270 140 0 12 -49 135 -110 272 -116 264 -140 301 -188 289 -75 -19 -76 -18 -93 23 -27 66 -95 95 -156 68z m64 -74 c6 -4 16 -19 22 -34 9 -25 8 -28 -26 -39 -29 -9 -37 -9 -44 2 -14 23 -10 57 9 68 21 13 24 13 39 3z m297 -330 c54 -125 99 -231 98 -237 0 -9 -411 -145 -438 -145 -10 0 -117 500 -109 508 1 2 15 4 31 5 26 2 29 -1 30 -31 1 -18 8 -40 17 -49 14 -14 20 -15 54 -2 46 18 56 51 23 81 -11 11 -19 25 -17 31 4 12 66 31 74 23 3 -2 7 -23 10 -46 7 -50 26 -62 73 -46 27 8 36 17 38 38 2 18 -3 30 -16 37 -42 23 -34 61 13 61 17 0 37 -40 119 -228z"/>
+                                                                                                <path d="M2107 1980 c-14 -11 -29 -29 -32 -40 -5 -16 -13 -19 -48 -14 -27 4 -48 1 -59 -8 -20 -16 -188 -369 -188 -396 0 -10 9 -27 20 -37 20 -18 357 -124 396 -125 49 0 60 26 104 230 22 107 38 205 35 218 -3 13 -20 30 -39 39 -30 14 -33 20 -32 55 2 78 -95 126 -157 78z m76 -66 c3 -3 3 -12 0 -19 -6 -17 -33 -8 -33 11 0 14 21 19 33 8z m-148 -93 c0 -13 10 -30 22 -38 20 -14 24 -13 45 10 27 28 48 25 48 -8 0 -12 7 -28 15 -35 17 -14 51 -5 59 15 8 22 39 19 32 -2 -3 -10 -19 -83 -36 -162 -17 -79 -32 -147 -35 -151 -4 -6 -301 76 -314 86 -2 2 29 74 70 159 69 146 93 179 94 126z"/>
+                                                                                                <path d="M232 1468 c-16 -16 -15 -43 1 -56 7 -6 46 -12 86 -14 l73 -3 144 -517 c79 -285 151 -529 159 -542 17 -25 71 -56 100 -56 14 0 13 -5 -7 -32 -31 -44 -32 -134 -2 -174 39 -53 71 -69 134 -69 63 0 95 16 134 69 30 40 29 133 -2 175 l-23 31 211 0 211 0 -23 -31 c-31 -42 -32 -135 -2 -175 39 -53 71 -69 134 -69 63 0 95 16 134 69 30 40 29 133 -2 175 l-22 30 106 3 c89 3 109 6 118 21 8 12 8 22 0 35 -10 16 -50 17 -561 20 -508 2 -551 3 -565 20 -9 9 -19 27 -22 40 l-7 22 421 0 c454 0 464 1 487 52 16 36 233 755 233 773 0 29 -28 71 -55 83 -20 9 -188 12 -683 12 l-656 -1 -14 48 c-8 26 -19 54 -24 61 -14 16 -199 17 -216 0z m611 -351 c20 -89 37 -166 37 -170 0 -4 -61 -7 -135 -7 l-134 0 -17 58 c-9 31 -29 103 -45 160 -17 56 -27 107 -24 112 4 6 66 10 144 10 l137 0 37 -163z m502 131 c-3 -18 -16 -94 -28 -168 l-23 -135 -164 -3 -165 -2 -33 147 c-19 82 -36 158 -39 171 l-5 22 231 0 232 0 -6 -32z m450 20 c2 -7 -17 -83 -43 -168 l-48 -155 -162 -3 c-139 -2 -162 0 -162 13 0 15 36 247 46 298 l6 27 179 0 c135 0 181 -3 184 -12z m-859 -558 c18 -80 36 -155 39 -167 5 -23 5 -23 -108 -23 -75 0 -119 4 -130 13 -9 7 -33 74 -57 157 -22 80 -42 151 -45 158 -4 10 24 12 132 10 l137 -3 32 -145z m341 123 c-3 -16 -16 -92 -28 -170 l-23 -143 -83 0 c-46 0 -83 2 -83 4 0 3 -16 74 -35 157 -19 84 -35 159 -35 166 0 10 33 13 146 13 l147 0 -6 -27z m366 -90 c-19 -65 -43 -140 -52 -168 l-16 -50 -132 -3 c-122 -2 -133 -1 -133 15 0 10 11 83 25 163 14 80 25 148 25 153 0 4 72 7 159 7 l159 0 -35 -117z m-668 -528 c50 -49 15 -135 -55 -135 -41 0 -80 39 -80 80 0 41 39 80 80 80 19 0 40 -9 55 -25z m640 0 c50 -49 15 -135 -55 -135 -41 0 -80 39 -80 80 0 41 39 80 80 80 19 0 40 -9 55 -25z"/>
+                                                                                            </g>
+                                                                                        </svg>
+                                                                                    </div>
+                                                                                    <h5>Sipariş Geçmişi bulunmamaktadır !</h5>
+                                                                                </div>
+                                                                            </div>
+                                                        `;
+                        $('#orderHistoryTab').html(OrderHistoryEmptyHTML);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateOrders();
+        });
+
+        // Pos Ekranının üstündeki saat scripti
+
+        function formatDate(dateString) {
+            let date = new Date(dateString);
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let year = date.getFullYear();
+            let hours = String(date.getHours()).padStart(2, '0');
+            let minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${day}.${month}.${year} - ${hours}:${minutes}`;
+        }
+
+        // Detay Modelindeki Quantity (Adet) alanını arttırıp, azaltan scriptler
+
+        document.getElementById('modalPosItem').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('qtyInput').value = 1;
+        }); // Model kapanınca inputtaki value değerini 1'e çekiyor.
+
+        document.getElementById('btnQtyDecrease').addEventListener('click', function (event) {
+            event.preventDefault(); // Linkin default davranışını engelle
+            var qtyInput = document.getElementById('qtyInput');
+            var currentValue = parseInt(qtyInput.value);
+            if (currentValue > 1) { // Minimum değer 1 olmalı
+                qtyInput.value = currentValue - 1;
+            }
+        });
+
+        document.getElementById('btnQtyIncrease').addEventListener('click', function (event) {
+            event.preventDefault(); // Linkin default davranışını engelle
+            var qtyInput = document.getElementById('qtyInput');
+            var currentValue = parseInt(qtyInput.value);
+            qtyInput.value = currentValue + 1;
+        });
+
+
+    </script>
+
+
+
+    <script src="~/Pos2/assets/js/vendor.min.js" type="text/javascript"></script>
+    <script src="~/Pos2/assets/js/app.min.js" type="text/javascript"></script>
+    <script src="~/Pos2/assets/js/demo/pos-customer-order.demo.js" type="text/javascript"></script>
+
+
+</body>
+</html>

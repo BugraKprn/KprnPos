@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@await Html.PartialAsync("~/Views/Layout/_PartialHead.cshtml")
+<body>
+
+    <div class="main-wrapper">
+
+        @await Html.PartialAsync("~/Views/Layout/_PartialNavbar.cshtml")
+
+
+        @await Html.PartialAsync("~/Views/Layout/_PartialSidebar.cshtml")
+
+
+
+
+        @RenderBody()
+
+    </div>
+
+    @await Html.PartialAsync("~/Views/Layout/_PartialScript.cshtml")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

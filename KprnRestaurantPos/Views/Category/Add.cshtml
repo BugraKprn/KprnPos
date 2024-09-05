@@ -1,0 +1,83 @@
+﻿@model Entity.Layer.Concrete.Category
+
+@{
+    ViewData["Title"] = "Kategori Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Kategori Ekle</h4>
+                <h6></h6>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    @using (Html.BeginForm("Add", "Category", FormMethod.Post))
+                    {
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Ad</label>
+                                <input type="text" name="CategoryName">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Sıra</label>
+                                <input type="text" name="ProductOrder">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Durum</label>
+                                    @Html.DropDownListFor(x => x.CategoryStatus, new List<SelectListItem>
+                                { new SelectListItem{Text="Aktif", Value="True"},
+                                new SelectListItem{Text="Deaktif", Value="False"}}, new { @class = "form-control"} )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Admin Pos Icon</label>
+                                <div class="image-upload">
+                                    <input type="file" name="CategoryIcon">
+                                    <div class="image-uploads">
+                                        <img src="~/Pos/assets/img/icons/upload.svg" alt="img">
+                                        <h4>Dosya yüklemek için sürükleyin ve bırakın</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Menü Görsel</label>
+                                <div class="image-upload">
+                                    <input type="file" name="CategoryMenuImage">
+                                    <div class="image-uploads">
+                                        <img src="~/Pos/assets/img/icons/upload.svg" alt="img">
+                                        <h4>Dosya yüklemek için sürükleyin ve bırakın</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button class="btn btn-submit me-2" type="submit">Kaydet</button>
+                            <a href="/Pos/Product" class="btn btn-cancel">Cancel</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

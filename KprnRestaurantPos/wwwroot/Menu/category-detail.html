@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+<body ng-app="app" class="ng-scope">
+    <div data-ui-view="" class="ng-scope">
+        <app class="ng-scope ng-isolate-scope"><!-- uiView: header -->
+            <div data-ui-view="header" class="cmp-pc cmp-width position-absolute ng-scope" style="width: 100%">
+                <header class="ng-scope ng-isolate-scope">
+                    <nav class="navbar navbar-light text-white app-header theme-primary-bg-0">
+                        <a href="./categories.html"><i class="fa fa-arrow-left black cursor-hand theme-primary-text-0"></i></a>
+                        <!-- Middle header title -->
+                        <div class="pl-0 text-center middle-h">
+                            <span class="mb-0 mx-auto header__text theme-primary-text-0">COFFEA TURKEY</span>
+                        </div>
+                        <a class="m-l-20 ng-scope" href="./feedback.html">
+                            <svg class="theme-primary-fill-0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1zM4 8h12v8h-5.277L7 18.234V16H4V8z"></path>
+                                <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path>
+                            </svg>
+                        </a>
+                    </nav>
+                </header>
+            </div>
+            <div id="den" class="cmp-pc p-16 duv theme-primary-bg-0 cmp-box-shadow-2" style="padding-top: 76px !important;min-height: 100%">
+                <!-- uiView: -->
+                <div data-ui-view="" class="ng-scope">
+                    <categories class="ng-scope ng-isolate-scope">
+                        <!-- uiView: -->
+                        <div data-ui-view="" class="ng-scope">
+                            <category class="ng-scope ng-isolate-scope">
+                                <!-- Lists products of a category -->
+                                <div class="category ng-scope" ng-style="QrMenuViewMode === 1 &amp;&amp; {'margin-top':'-15px'}">
+                                    <!-- ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a href="./product-details.html" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="./product-details.html">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                    <div class="row category__row ng-scope" ng-repeat="product in products">
+                                        <div class="col category__col">
+                                            <!-- ngIf: QrMenuViewMode === 0 || QrMenuViewMode === 3 -->
+                                            <a data-category-detail-item="" data-data="product" data-qr-menu-order-mode="QrMenuOrderMode" ng-if="QrMenuViewMode === 0 || QrMenuViewMode === 3" class="ng-scope ng-isolate-scope">
+                                                <div class="row category-item" style="justify-content: center;">
+                                                    <div class="col-3 p-l-0 xs-p-l-15 category-item__col category-item__image text-center ng-scope" style="max-width: fit-content;" ng-if="QrMenuViewMode !== 3">
+                                                        <img alt="ICE AMERICANO" data-ui-sref="app.product({productId: data.ProductID})" class="img-thumbnail cursor-hand p-0 ng-isolate-scope" ng-src="../../assets/img/placeholder.png" appear="" imsrc="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg" href="#!/product/536888" src="https://menuluxstorage.blob.core.windows.net/products/30072020081227620x100.jpg">
+                                                    </div><!-- end ngIf: QrMenuViewMode !== 3 -->
+                                                    <div class="col-9 p-r-0 xs-p-r-15 category-item__col category-item__body" ng-class="{'col-12 prl-30' : QrMenuViewMode === 3}">
+                                                        <div class="row category-body__title cursor-hand theme-primary-text-0" data-ui-sref="app.product({productId: data.ProductID})" href="#!/product/536888">
+                                                            ICE AMERICANO
+                                                        </div>
+                                                        <div class="row" style="display: flex;flex-wrap: nowrap">
+                                                            <p class="description p-r-50 xs-p-r-10 theme-secondary-text-0" style="white-space: pre-line;">180ML Su+2Shot Espresso+Buz</p>
+                                                        </div>
+                                                        <div class="row category-body__price m-t-5">
+                                                            <p class="mr-4 m-t-2 font-poppins f-w-500 m-b-0 theme-third-text-0" ng-if="!isQuantityArea &amp;&amp; data.Price > 0">₺
+                                                                65.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end ngRepeat: product in products -->
+                                </div>
+                                <!-- end ngIf: products.length > 0 -->
+                            </category>
+                        </div>
+                    </categories>
+                </div>
+            </div>
+        </app>
+    </div>
+</body>
+</html>

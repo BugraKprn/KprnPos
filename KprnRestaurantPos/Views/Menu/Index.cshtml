@@ -1,0 +1,79 @@
+﻿@using Entity.Layer.Concrete
+@model List<Setting>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kprn | Menu</title>
+    <link rel="stylesheet" href="~/Menu/assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+@foreach (var item in Model)
+{
+    <body ng-app="app" class="ng-scope">
+        <div id="den" class="cmp-pc p-16 duv cmp-box-shadow-2 theme-primary-bg-0" style="padding-top: 76px !important;min-height: 100%">
+            <!-- uiView: -->
+            <div data-ui-view="" class="ng-scope">
+                <div class="ng-scope ng-isolate-scope">
+                    <div class="login">
+                        <div style="display: flex;flex-direction: column;" class="cmp-pc"></div>
+                        <div class="customer-place cmp-pc theme-primary-bg-0 m-t-n-46">
+                            <!-- Customer Image -->
+                            <div class="p-7 brand-icon-background customerimgurlsize">
+                                <div class="p-7 brand-icon-background-2">
+                                    <div class="p-0 brand-icon-background-3">
+                                        <img class="full-width full-height" style="border-radius:100%" src="~/Menu/assets/img/firstpage.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-poppins f-s-20 f-w-600 text-center m-b-5 m-t-20 cmp-pc p-r-5 p-l-5 theme-primary-text-0" style="color: #2f2f2f" ;>@item.CompanyName</h6>
+                            <h6 class="font-poppins m-b-5 f-s-18 f-w-400 text-center m-0 theme-primary-text-0" style="opacity: .8">Hoşgeldiniz</h6>
+                            <div class="text-center menu-button">
+                                <!-- Go to Menu-->
+                                <a class="b-r-100 m-t-30 m-b-20 font-poppins f-s-20 menu-button-style cursor-hand button-primary-bg-0" href="/Menu/Categories">
+                                    Menüye Git
+                                </a>
+                            </div>
+                            <div class="ng-scope">
+                                <div class="d-flex justify-content-center">
+                                    @if (!String.IsNullOrEmpty(item.Facebook))
+                                    {
+                                        <a href="@item.Facebook" target="_blank">
+                                            <img src="~/Menu/assets/img/facebook.png" class="height-34 p-3">
+                                        </a>
+                                    }
+                                    @if (!String.IsNullOrEmpty(item.Instagram))
+                                    {
+                                        <a href="@item.Instagram" target="_blank">
+                                            <img src="~/menu/assets/img/instagram.png" class="height-34 p-3">
+                                        </a>
+                                    }
+                                    @if (!String.IsNullOrEmpty(item.Twitter))
+                                    {
+                                        <a href="@item.Twitter" target="_blank">
+                                            <img src="~/Menu/assets/img/twitter.png" class="height-34 p-3">
+                                        </a>
+                                    }
+                                    @if (!String.IsNullOrEmpty(item.Pinterest))
+                                    {
+                                        <a href="@item.Pinterest" target="_blank">
+                                            <img src="~/Menu/assets/img/pinterest.png" class="height-34 p-3">
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+}
+</html>

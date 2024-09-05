@@ -1,0 +1,68 @@
+﻿@model Entity.Layer.Concrete.Category
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Kategori Düzenleme Sayfası</h4>
+            </div>
+        </div>
+        @using (Html.BeginForm("Edit", "Category", FormMethod.Post))
+        {
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>Adı</label>
+                                    @Html.HiddenFor(x => x.CategoryId, new { @class = "form-control" })
+                                    @Html.HiddenFor(x => x.CategoryMenuImage, new { @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Durum</label>
+                                    @Html.DropDownListFor(x => x.CategoryStatus, new List<SelectListItem>
+                                { new SelectListItem{Text="Aktif", Value="True"},
+                                new SelectListItem{Text="Pasif", Value="False"}}, new { @class = "form-control"} )
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Sıra</label>
+                                    @Html.TextBoxFor(x => x.CategoryOrder, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Görsel</label>
+                                    <div class="image-upload">
+                                        <input type="file">
+                                        <div class="image-uploads">
+                                            <img src="assets/img/icons/upload.svg" alt="img">
+                                            <h4>Dosyanızı buraya sürükleyerek yükleme yapabilirsiniz</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-submit me-2">Kaydet</button>
+                                <a href="categorylist.html" class="btn btn-cancel">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

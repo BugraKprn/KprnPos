@@ -1,0 +1,576 @@
+﻿@model List<KprnRestaurantPos.Models.TableViewModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Kprn | POS - Masa Yönetimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/pos2/assets/css/vendor.min.css" rel="stylesheet">
+    <link href="~/pos2/assets/css/app.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+</head>
+
+<body class='pace-top'>
+
+    <div id="app" class="app app-content-full-height app-without-sidebar app-without-header">
+
+        <div id="content" class="app-content p-0">
+
+            <div class="pos pos-vertical pos-with-header pos-with-sidebar" id="pos">
+
+                <div class="pos-container">
+
+                    <div class="pos-header">
+                        <div class="logo">
+                            <a href="/Pos/Dashboard">
+                                <div class="logo-img"><i class="fa fa-bowl-rice" style="font-size: 1.5rem;"></i></div>
+                                <div class="logo-text">Kprn | Pos</div>
+                            </a>
+                        </div>
+                        <div class="time" id="clock"></div>
+                        <div class="nav">
+                            <div class="nav-item">
+                                <a href="pos_kitchen_order.html" class="nav-link">
+                                    <i class="far fa-clock nav-icon"></i>
+                                </a>
+                            </div>
+                            <div class="nav-item">
+                                <a href="pos_table_booking.html" class="nav-link">
+                                    <i class="far fa-calendar-check nav-icon"></i>
+                                </a>
+                            </div>
+                            <div class="nav-item">
+                                <a href="pos_menu_stock.html" class="nav-link">
+                                    <i class="fa fa-chart-pie nav-icon"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pos-content">
+                        <div class="pos-content-container p-3">
+                            <div class="row gx-3">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-xl-3 col-lg-4 col-md-6 pb-3">
+                                        <div class="pos-checkout-table in-use">
+                                            <div class="pos-checkout-table-container" data-toggle="select-table">
+                                                <a href="#" class="pos-checkout-table-header" style="text-decoration: none; color: black;" onclick="masaSec(@item.TableId)">
+                                                    @if (item.OrderCount > 0)  // Eğer sipariş varsa kırmızı daire
+                                                    {
+                                                        <div class="status"><i class="fa fa-circle" style="color: #dc3545; font-size: 12px;"></i></div>
+                                                    }
+                                                    else // Eğer sipariş yoksa yeşil daire
+                                                    {
+                                                        <div class="status"><i class="fa fa-circle" style="color: #198754; font-size: 12px;"></i></div>
+                                                    }
+                                                    <div class="fw-bold fs-1">@item.TableName</div>
+                                                    <div class="fw-bold fs-1">&nbsp;</div>
+                                                    <div class="fs-13px text-body text-opacity-50">
+                                                        @if (item.OrderDate.HasValue && item.OrderCount > 0)
+                                                        {
+                                                            <span id="elapsed-time-@item.TableId" data-order-date="@item.OrderDate.Value.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                                                
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Boşta</span>
+                                                        }
+                                                    </div>
+                                                </a>
+                                                <div class="pos-checkout-table-info small">
+                                                    <div class="row">
+                                                        @if (item.OrderCount > 0)
+                                                        {
+                                                            <div class="col-6 d-flex justify-content-center">
+                                                                <div class="w-20px">
+                                                                    <i class="fa fa-receipt text-opacity-50" style="color: #292b2c"></i>
+                                                                </div>
+                                                                <div id="table-price" class="w-60px">@item.OrderTotalPrice TL</div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-6 d-flex justify-content-center">
+                                                                <div class="w-20px">
+                                                                    <i class="fa fa-receipt text-opacity-50" style="color: #292b2c"></i>
+                                                                </div>
+                                                                <div class="w-60px">Masa Boş</div>
+                                                            </div>
+                                                        }
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <a href="javascript:;" class="w-20px">
+                                                                <i class="fa fa-play text-opacity-50" style="color: #ddb14d"></i>
+                                                            </a>
+                                                            <a href="javascript:;" style="text-decoration: none; color: black;" class="w-60px" onclick="detaylariGoster(@item.TableId)">Detaylar</a>
+                                                        </div>
+                                                        @if (item.OrderCount > 0)
+                                                        {
+                                                            <div class="col-6 d-flex justify-content-center">
+                                                                <a href="javascript:;" class="w-20px">
+                                                                    <i class="fa fa-arrows-alt text-opacity-50" style="color: cadetblue"></i>
+                                                                </a>
+                                                                <a href="javascript:;" style="text-decoration: none; color: black;" class="w-60px" onclick="masaTasiModalAc(@item.TableId)">Masa Taşı</a>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-6 d-flex justify-content-center">
+                                                                <a href="javascript:;" class="w-20px">
+                                                                    <i class="fa fa-arrows-alt text-opacity-50" style="color: cadetblue"></i>
+                                                                </a>
+                                                                <a href="javascript:;" style="text-decoration: none; color: black;" class="w-60px" onclick="masaTasiHataMesaji()">Masa Taşı</a>
+                                                            </div>
+                                                        }
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <a href="javascript:;" class="w-20px">
+                                                                <i class="fa fa-sitemap text-opacity-50" style="color: dodgerblue"></i>
+                                                            </a>
+                                                            <a href="javascript:;" style="text-decoration: none; color: black;" class="w-60px" onclick="masaBolModalAc(@item.TableId)">Masa Böl</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="pos-sidebar" id="pos-sidebar">
+
+                        <div class="pos-sidebar-header">
+                            <div class="back-btn">
+                                <button type="button" data-toggle-class="pos-mobile-sidebar-toggled"
+                                        data-toggle-target="#pos" class="btn">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </div>
+                            <div class="icon"><i class="fa fa-plate-wheat"></i></div>
+                            <div class="title">Masa:</div>
+                        </div>
+
+                        <hr class="m-0 opacity-1">
+
+                        <div id="pos-sidebar-body" class="pos-sidebar-body" data-scrollbar="true" data-height="100%">
+                        </div>
+
+
+                        <div class="pos-sidebar-footer">
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Ara Toplam</div>
+                                <div class="flex-1 text-end h6 mb-0">0.00 TL</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div>Vergi (6%)</div>
+                                <div class="flex-1 text-end h6 mb-0">0.00 TL</div>
+                            </div>
+                            <hr class="opacity-1 my-10px">
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Toplam</div>
+                                <div class="flex-1 text-end h4 mb-0">0.00 TL</div>
+                            </div>
+                            <div class="mt-3">
+                                <div class="d-flex">
+                                    <a href="#"
+                                       class="btn btn-default w-70px me-10px px-0 d-flex align-items-center justify-content-center">
+                                        <span>
+                                            <i class="fab fa-paypal fa-lg my-10px d-block"></i>
+                                            <span class="small fw-semibold">Kart</span>
+                                        </span>
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-default w-70px me-10px d-flex align-items-center justify-content-center">
+                                        <span>
+                                            <i class="fa fa-credit-card fa-fw fa-lg my-10px d-block"></i>
+                                            <span class="small fw-semibold">Fatura</span>
+                                        </span>
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-theme flex-fill d-flex align-items-center justify-content-center">
+                                        <span>
+                                            <i class="fa fa-wallet fa-lg my-10px d-block"></i>
+                                            <span class="small fw-semibold">Nakit</span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Masa Seçimi İçin Modal -->
+        <div class="modal fade" id="masaSecModal" tabindex="-1" role="dialog" aria-labelledby="masaSecModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="masaSecModalLabel">Taşınmak istenen masayı seçiniz !</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div id="table-list">
+                            <!-- Modal içeriği burada olacak -->
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                        <button type="button" id="masaTasiBtn" class="btn btn-success">Masayı Taşı</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+    <script src="~/pos2/assets/js/vendor.min.js" type="ffdf8205c19b354e087c8536-text/javascript"></script>
+    <script src="~/pos2/assets/js/app.min.js" type="ffdf8205c19b354e087c8536-text/javascript"></script>
+    <script src="~/pos2/assets/js/demo/pos-counter-checkout.demo.js" type="ffdf8205c19b354e087c8536-text/javascript"></script>
+
+    <script>
+        function detaylariGoster(tableId) {
+            var posSidebarBody = document.getElementById('pos-sidebar');
+            $.ajax({
+                method: 'GET',
+                url: '/Pos/GetOrderHistoryByTableId/' + tableId,
+                data: { tableId: tableId },
+                success: function (data) {
+                    var orders = data;
+                    var totalAmount = 0;
+
+                    if (!orders || orders[0].orderId === 0) {
+                        console.log('Sipariş bulunamadı!');
+                        masaDetayHataMesaji();
+                        return;
+                    }
+
+                    var content = `
+                        <div class="pos-sidebar-header">
+                            <div class="back-btn">
+                                <button type="button" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos" class="btn">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </div>
+                            <div class="icon"><i class="fa fa-plate-wheat"></i></div>
+                            <div class="title">Masa: ${data[0].tableName}</div>
+                            <div class="order">Siparişler</div>
+                        </div>
+                        <hr class="m-0 opacity-1">
+                        <div id="pos-sidebar-body" class="pos-sidebar-body" data-scrollbar="true" data-height="100%">
+                    `;
+
+                    // Ürünleri gruplamak için bir nesne kullanıyoruz
+                    var productMap = {};
+
+                    // Siparişleri ve sipariş öğelerini döngüyle işliyoruz                                             
+                    for (var i = 0; i < orders.length; i++) {
+                        for (var j = 0; j < orders[i].orderItems.length; j++) {
+                            var item = orders[i].orderItems[j];
+                            var productId = item.productId;
+                            // Eğer ürün daha önce map'e eklenmişse, miktarını artırıyoruz
+                            if (productMap[productId]) {
+                                productMap[productId].quantity += item.quantity;
+                            } else {
+                                // Eğer ürün yoksa, map'e ekliyoruz
+                                productMap[productId] = { ...item };
+                            }
+                        }
+                    }
+                    console.log('Gelen veriler:', orders);
+                    // Ürünleri tek tek işleyip HTML oluşturuyoruz
+                    for (var key in productMap) {
+                        var item = productMap[key];
+                        var unitPriceFormatted = item.unitPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+                        var rowtotalPrice = item.unitPrice * item.quantity;
+                        var rowTotalPriceFormatted = rowtotalPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+                        totalAmount += rowtotalPrice;
+
+                        var orderItemHtml = `
+                            <div class="pos-order py-3" onclick="changeBackgroundColor(this)">
+                                <div class="pos-order-product">
+                                    <img class="w-50px h-50px rounded" src="/pos2/assets/img/pos/${item.productImage}" alt="Product Image">
+                                    <div class="flex-1">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="fs-6 fw-semibold">${item.productName}</div>
+                                                <div class="fs-13px">${unitPriceFormatted}</div>
+                                                <div class="fs-13px text-body text-opacity-50">Kategori: ${item.categoryName}</div>
+                                            </div>
+                                            <div class="col-2">${item.quantity}</div>
+                                            <div class="col-3 text-body fw-semibold text-end">${rowTotalPriceFormatted}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        content += orderItemHtml;
+                    }
+
+                    var taxAmount = totalAmount * 0.06;
+                    var totalWithTax = totalAmount + taxAmount;
+
+                    content += `
+                        </div>
+                        <div class="pos-sidebar-footer">
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Ara Toplam</div>
+                                <div class="flex-1 text-end h6 mb-0">${totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div>Vergi (6%)</div>
+                                <div class="flex-1 text-end h6 mb-0">${taxAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL</div>
+                            </div>
+                            <hr class="opacity-1 my-10px">
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Toplam</div>
+                                <div class="flex-1 text-end h4 mb-0">${totalWithTax.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL</div>
+                            </div>
+                            <div class="mt-3">
+                                <div id="payment-form">
+                                    <div class="payment-row">
+                                        <select class="form-select payment-type">
+                                            <option value="cash">Nakit</option>
+                                            <option value="card">Kart</option>
+                                            <option value="invoice">Fatura</option>
+                                        </select>
+                                        <input type="number" class="form-control payment-amount" placeholder="Tutar" min="0">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" id="add-payment-method">Ödeme Metodu Ekle</button>
+                                <button class="btn btn-theme mt-2" id="process-payment-btn">Ödeme Yap</button>
+                            </div>
+                        </div>
+                    `;
+
+                    posSidebarBody.innerHTML = content;
+
+                    window.changeBackgroundColor = function (element) {
+                        element.style.backgroundColor = "#f0f0f0";
+                    };
+
+                    var addPaymentButton = document.getElementById('add-payment-method');
+                    addPaymentButton.addEventListener('click', function () {
+                        var paymentForm = document.getElementById('payment-form');
+                        var paymentRow = document.createElement('div');
+                        paymentRow.classList.add('payment-row');
+                        paymentRow.innerHTML = `
+                            <select class="form-select payment-type">
+                                <option value="cash">Nakit</option>
+                                <option value="card">Kart</option>
+                            </select>
+                            <input type="number" class="form-control payment-amount" placeholder="Tutar" min="0">
+                        `;
+                        paymentForm.appendChild(paymentRow);
+                    });
+
+                    var processPaymentButton = document.getElementById('process-payment-btn');
+                    processPaymentButton.addEventListener('click', function () {
+                        var paymentRows = document.querySelectorAll('.payment-row');
+                        var payments = [];
+                        paymentRows.forEach(function (row) {
+                            var paymentType = row.querySelector('.payment-type').value;
+                            var amount = parseFloat(row.querySelector('.payment-amount').value);
+                            if (!isNaN(amount) && amount > 0) {
+                                payments.push({
+                                    paymentType: paymentType,
+                                    amount: amount
+                                });
+                            }
+                        });
+
+                        var totalPaid = payments.reduce((sum, payment) => sum + payment.amount, 0);
+                        if (totalPaid !== totalWithTax) {
+                            alert(`Lütfen toplam ${totalWithTax.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL ödeme yapınız.`);
+                            return;
+                        }
+
+                        odemeIslemi(tableId, payments);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+
+        function masaTasiModalAc(currentTableId) {
+
+            $('#masaSecModal').modal('show');
+            var masaListesi = document.getElementById('table-list');
+
+            $.ajax({
+                url: '/Table/List',
+                method: 'GET',
+                success: function (tables) {
+
+                    var content = '';
+                    for (var i = 0; i < tables.length; i++) {
+                        if (tables[i].tableId !== currentTableId) {
+                            content += `
+                                       <li class="list-group-item">
+                                          <input type="radio" name="selectedTable" value="${tables[i].tableId}"> ${tables[i].tableName}
+                                       </li>
+                                    `;
+                        }
+                    }
+                    masaListesi.innerHTML = content;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+
+            $('#masaTasiBtn').off('click').on('click', function () {
+                var selectedTableId = $('input[name="selectedTable"]:checked').val();
+                if (selectedTableId) {
+                    masaTasi(currentTableId, selectedTableId);
+                } else {
+                    toastr.error('Lütfen bir masa seçin.', 'Hata');
+                }
+            });
+        }
+
+        function masaTasi(currentTableId, newTableId) {
+            $.ajax({
+                url: '/Pos/MoveOrderToTable',
+                method: 'POST',
+                data: {
+                    currentTableId: currentTableId,
+                    newTableId: newTableId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#masaSecModal').modal('hide');
+                        toastr.success('Masa Başarıyla Taşındı!', 'Başarılı');
+                        setTimeout(function () {
+                            window.location.reload();  // Sayfayı yenile
+                        }, 1000);  // 1 saniye bekleyip sayfayı yenile
+                    } else {
+                        toastr.error('Masa taşınırken bir hata oluştu.', 'Hata');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function updateElapsedTime() {
+            document.querySelectorAll("[id^='elapsed-time-']").forEach(function (element) {
+                var orderDateStr = element.getAttribute("data-order-date");
+                var orderDate = new Date(orderDateStr);
+
+                var now = new Date();
+                var elapsed = now - orderDate; // Geçen süreyi milisaniye cinsinden hesapla
+
+                var seconds = Math.floor((elapsed / 1000) % 60);
+                var minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+                var hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+
+                element.textContent = `${hours}:${minutes}:${seconds}`;
+            });
+        }
+
+        function odemeIslemi(tableId, payments) {
+            console.log('Ödeme İşlemi:');
+            console.log('Masa ID:', tableId);
+            console.log('Ödemeler:', payments);
+
+            $.ajax({
+                method: 'POST',
+                url: '/Payment/ProcessPayment',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    tableId: tableId,
+                    payments: payments
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+
+                    } else {
+                        alert('Ödeme işlemi başarısız: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Ödeme işlemi başarısız.');
+                }
+            });
+        }
+
+        function masaSec(masaId) {
+            window.location.href = "/Pos/Order?tableId=" + masaId;
+        }
+
+        function masaDetayHataMesaji() {
+            toastr.error('Bu Masada Gösterilecek Ürün Yok !', 'Hata');
+        }
+
+        function masaTasiHataMesaji() {
+            toastr.error('Bu Masada Sipariş Yok !', 'Hata');
+        }
+
+        $(document).ready(function () {
+            // Saat bilgisini güncelleyen fonksiyon
+            function updateClock() {
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+
+                // Saat, dakika ve saniye değerlerini iki haneli sayıya dönüştür
+                hours = (hours < 10 ? "0" : "") + hours;
+                minutes = (minutes < 10 ? "0" : "") + minutes;
+                seconds = (seconds < 10 ? "0" : "") + seconds;
+
+                // Saati ekrana yaz
+                $("#clock").text(hours + ":" + minutes + ":" + seconds);
+            }
+
+            // Her saniyede bir saat bilgisini güncelle
+            setInterval(updateClock, 1000);
+
+            // Sayfa yüklendiğinde saat bilgisini güncelle
+            updateClock();
+        });
+
+        // Sayfa yüklendiğinde başlat
+        window.onload = function () {
+            updateElapsedTime(); // İlk güncelleme
+            setInterval(updateElapsedTime, 1000); // Her saniye güncelle
+        };
+
+    </script>
+
+
+</body>
+
+</html>
+

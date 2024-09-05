@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap">
+</head>
+<body ng-app="app" class="ng-scope">
+    <div data-ui-view="" class="ng-scope">
+        <app class="ng-scope ng-isolate-scope"><!-- uiView: header -->
+            <div data-ui-view="header" class="cmp-pc cmp-width position-absolute ng-scope" style="width: 100%">
+                <header class="ng-scope ng-isolate-scope">
+                    <nav class="navbar navbar-light text-white app-header theme-primary-bg-0">
+                        <a href="./category-detail.html"><i class="fa fa-arrow-left black cursor-hand theme-primary-text-0"></i></a>
+                        <!-- Middle header title -->
+                        <div class="pl-0 text-center middle-h">
+                            <span class="mb-0 mx-auto header__text theme-primary-text-0">COFFEA TURKEY</span>
+                        </div>
+                        <a class="m-l-20 ng-scope" href="./feedback.html">
+                            <svg class="theme-primary-fill-0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1zM4 8h12v8h-5.277L7 18.234V16H4V8z"></path>
+                                <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path>
+                            </svg>
+                        </a>
+                    </nav>
+                </header>
+            </div>
+            <div id="den" class="cmp-pc p-16 duv theme-primary-bg-0" style="padding-top: 76px !important;min-height: 100%">
+                <!-- uiView: --><div data-ui-view="" class="ng-scope"><product-detail class="ng-scope ng-isolate-scope"><!-- Notification Bar -->
+            <div class="page no-navbar product">
+            
+                <div id="notification" class="ng-binding">
+                    Sepete Eklendi!
+                </div>
+                <div class="navbrar-site navbrar-site-transparent navbar-site-icon gradient p-b-0 p-r-0 m-r-0" style="display: flex;justify-content: space-between">
+                    <i class="fa fa-arrow-left white icon p-l-20 cursor-hand" ng-click="$ctrl.onBackPressed()"></i>
+                    <!-- Basket -->
+                    <!-- ngIf: QrMenuOrderMode !== 0 && isOrderTime -->
+                </div>
+            
+                <div class="product-page-header-img cmp-pc cmp-box-shadow-2">
+                    <!-- ngIf: product.ImageUrl --><img ng-if="product.ImageUrl" class="product-image ng-scope" alt="BITKI ÇAYI" ng-src="https://menuluxstorage.blob.core.windows.net/products/30072020081642385.jpg" src="https://menuluxstorage.blob.core.windows.net/products/30072020081642385.jpg"><!-- end ngIf: product.ImageUrl -->
+                    <div class="product-page-header-infos p-t-0 p-b-0">
+                        <div class="row m-0 p-b-10">
+                            <!-- ngRepeat: tags in productTags track by $index  -->
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="display: flex;flex-direction: column">
+                                <p style="margin-bottom:5%;float: left !important;font-size: 1.4rem" ng-class="{'m-b-0':product.CookingTime!=null &amp;&amp; product.CookingTime != 0 || product.Calorie!=null &amp;&amp; product.Calorie != 0}" class="header-product-name ng-binding">BITKI ÇAYI </p>
+            
+                                <!-- ngIf: (product.CookingTime!=null && product.CookingTime != 0)||(product.Calorie!=null && product.Calorie != 0) -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="cmp-pc cmp-box-shadow-2 d-flex flex-column p-b-per theme-primary-bg-0" style="min-height:55%">
+                    <!-- ngIf: hasAnyAllergen -->
+                    <div class="product-description" ng-class="{'m-b-16':shouldHidePrice}">
+                        <div>
+                            <p class="m-b-0 theme-primary-text-0" style="white-space: pre-line" id="description">Kış Çayı, Elma-Tarçın, Yeşil Çay, Nane-Limon , Ada Çayı, Kuşburnu, Kırmızı Orman Meyveli, Hibiskus, Ihlamur, Papatya seçenekleriyle</p>
+                        </div>
+                    </div>
+            
+                    <!-- ngIf: product.Price > 0 --><div class="p-16 m-b-16 ng-scope" ng-hide="shouldHidePrice" ng-if="product.Price > 0">
+                        <div class="col-6 p-0 text-left" style="font-weight: bold">
+                            <p class="spec5 text-right theme-third-text-0" style="display: initial">
+                                ₺ 55.00 </p>
+                        </div>
+                    </div><!-- end ngIf: product.Price > 0 -->
+            
+                    <!-- ngRepeat: featureGroup in product.ProductFeatureGroups -->
+            
+                    <!-- ngRepeat: featureGroup in product.ProductFeatureGroups -->
+                </div>
+            
+            </div>
+            
+            <!-- Add To Cart -->
+            <!-- ngIf: QrMenuOrderMode !== 0 -->
+            
+            <!-- Allergens Popup -->
+            <div class="modal fade allergens-popup">
+                <div class="modal-dialog modal-dialog-centered justify-content-center">
+                    <div class="modal-content align-items-center b-r-20 primary-modal-bg-0" style="width: 80%;">
+                        <div class="allergens-header p-20">
+                            <h6 class="font-poppins text-left f-s-18 ng-binding">Alerjenler</h6>
+                            <p class="font-roboto m-0 ng-binding">Bu ürün sağlığınıza zarar verebilecek alerjenler içerebilir.</p>
+                        </div>
+                        <div class="allergens-lang-style">
+                            <div class="d-flex flex-column">
+                                <!-- ngRepeat: allergen in productAllergens track by $index -->
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger b-r-50 font-poppins p-r-30 p-l-30 m-15 primary-modal-button-bg-0" data-dismiss="modal" aria-label="Close">
+                            Tamam
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Modal Page -->
+            <div class="modal width-center-per fade feature-modal cmp-pc p-0">
+                <!-- Full screen modal -->
+                <div class="modal-dialog modal-fullscreen" style="height: 100%;max-width: none">
+                    <div class="modal-content theme-secondary-bg-0" style="border: none !important;overflow-x: hidden;">
+                        <!-- Header -->
+                        <div class="modal-header modal-header-width popup-modal-style b-r-0 p-20 height-50 modal-header-style theme-secondary-bg-0">
+                            <h6 class="font-poppins f-w-500 f-s-19 m-b-0 overflow-hidden theme-primary-text-0" style="margin-right: 5%;">
+                                Seçenekler
+                            </h6>
+                            <i class="cursor-hand f-s-24 fa fa-times" data-dismiss="modal" aria-label="close"></i>
+                        </div>
+            
+                        <div class="p-15" style="display: flex;align-items: center;justify-content: flex-start">
+                            <!-- Product image -->
+                            <div class="p-0 m-5 height-125 width-125 text-center">
+                                <img class="height-125 width-125 text-center b-r-20" ng-src="https://menuluxstorage.blob.core.windows.net/products/30072020081642385.jpg" src="https://menuluxstorage.blob.core.windows.net/products/30072020081642385.jpg">
+                            </div>
+            
+                            <!-- Product Name-->
+                            <div class="m-l-25">
+                                <p class="m-b-10 font-poppins f-w-600 f-s-18 theme-primary-text-0" style="display: flex;flex-direction: column;">
+                                    BITKI ÇAYI
+                                    <!-- ngIf: product.Price > 0 --><span class="font-poppins f-s-16 m-t-5 theme-third-text-0" ng-if="product.Price > 0">₺ 55.00</span><!-- end ngIf: product.Price > 0 -->
+                                </p>
+                                <div style="margin-bottom: auto;margin-left: auto;display: flex;justify-content: flex-start;">
+                                    <div ng-click="_onClickDecreaseQuantity()" class="cursor-hand">
+                                        <img class="height-24 lazy-load" src="../../../assets/img/icon-svg/minus.svg">
+                                    </div>
+            
+                                    <div class="font-poppins f-s-18 m-r-10 m-l-10 ng-binding">
+                                        
+                                    </div>
+            
+                                    <div ng-click="_onClickIncreaseQuantity()" class="cursor-hand">
+                                        <img class="height-24 lazy-load" src="../../../assets/img/icon-svg/plus.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngRepeat: featureGroup in product.ProductFeatureGroups -->
+            
+                        <!-- Footer -->
+                        <div class="row div-row-size" style="margin-top:auto">
+                            <div class="col-4 align-self-center total-price-style p-r-0">
+                                <h6 class="total-price-h6 theme-primary-text-0">
+                                    TOPLAM
+                                    <span class="total-price-span theme-primary-text-0">
+                                        ₺ 
+                                    </span>
+                                </h6>
+                            </div>
+                            <div class="col-8 align-self-center button-div-style p-l-0">
+                                <button style="width: 70%;line-height: 20px" id="addToCartBtnWithOptions" class="add-button-style primary-modal-button-bg-0" ng-click="_onClickAddToCart();">
+                                    <span class="ng-binding">Sepete Ekle</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feature Quantity Error Popup -->
+            <div class="modal fade feature-quantity-error">
+                <div class="modal-dialog modal-dialog-centered" style="justify-content: center">
+                    <div class="modal-content b-r-20 primary-modal-bg-0" style="align-items: center;width: 80%;">
+                        <img class="height-100 width-100 m-t-48 lazy-load" src="../../../assets/img/icon/order-error.png">
+                        <div class="modal-div-style m-48">
+                            <h5 class="result-text-style text-center ng-binding">
+                                
+                            </h5>
+                            <button type="button" class="btn btn-danger result-modal-style primary-modal-button-bg-0" data-dismiss="modal" aria-label="Close">
+                                Tamam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </product-detail></div>
+            </div>
+        </app>
+    </div>
+</body>
+</html>
