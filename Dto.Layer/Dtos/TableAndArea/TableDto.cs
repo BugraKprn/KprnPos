@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dto.Layer.Dtos.Table
+namespace Dto.Layer.Dtos.TableAndArea
 {
     public class TableDto
     {

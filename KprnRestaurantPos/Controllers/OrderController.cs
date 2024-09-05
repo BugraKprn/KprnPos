@@ -75,7 +75,7 @@ namespace KprnRestaurantPos.Controllers
                 var table = context.Tables.FirstOrDefault(t => t.TableId == paymentRequestDto.TableId);
                 if (table != null)
                 {
-                    table.IsOccupied = false;
+                    table.IsOccupied = "Boş";
                     context.SaveChanges();
                 }
 

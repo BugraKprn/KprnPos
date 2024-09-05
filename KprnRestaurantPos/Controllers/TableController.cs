@@ -1,9 +1,11 @@
 ﻿using Business.Layer.Concrete;
 using DataAccess.Layer.Concrete;
 using DataAccess.Layer.EntityFramework;
+using Dto.Layer.Dtos.TableAndArea;
 using Entity.Layer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace KprnRestaurantPos.Controllers
@@ -21,12 +23,56 @@ namespace KprnRestaurantPos.Controllers
             return View(values);
         }
 
+        [Route("/Pos/TableAndArea")]
+        public IActionResult Index1()
+        {
+            var tableAreas = context.TableAreas.ToList();
+            var tables = context.Tables.ToList();
+
+            var model = new TableAndAreaViewModel
+            {
+                TableAreas = tableAreas,
+                Tables = tables
+            };
+
+            return View(model);
+        }
+
+
         [HttpGet]
         public IActionResult List()
         {
             var tables = context.Tables.ToList();
-            return Json(tables);
+            return Ok(tables);
         }
+
+
+        [HttpPost]
+        public IActionResult UpdateTablePosition([FromBody] TablePositionUpdateDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Masa kaydını veritabanından bul
+                var table = context.Tables.FirstOrDefault(t => t.TableId == model.TableId);
+                if (table == null)
+                {
+                    return NotFound(); // Masa bulunamazsa hata döndür
+                }
+
+                // Masa konumunu güncelle
+                table.PosX = model.PosX;
+                table.PosY = model.PosY;
+
+                // Veritabanını güncelle
+                context.Tables.Update(table);
+                context.SaveChanges();
+
+                return Ok(); // Güncelleme başarılı
+            }
+
+            return BadRequest(); // Geçersiz model durumu
+        }
+
 
 
 

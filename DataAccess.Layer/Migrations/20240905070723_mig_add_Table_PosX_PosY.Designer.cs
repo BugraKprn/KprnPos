@@ -4,6 +4,7 @@ using DataAccess.Layer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Layer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240905070723_mig_add_Table_PosX_PosY")]
+    partial class mig_add_Table_PosX_PosY
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -390,16 +392,16 @@ namespace DataAccess.Layer.Migrations
                     b.Property<string>("IsOccupied")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PosX")
-                        .HasColumnType("float");
+                    b.Property<int?>("PosX")
+                        .HasColumnType("int");
 
-                    b.Property<double>("PosY")
-                        .HasColumnType("float");
+                    b.Property<int?>("PosY")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TableAreaId")
+                    b.Property<int?>("TableAreaId")
                         .HasColumnType("int");
 
                     b.Property<string>("TableName")
@@ -588,9 +590,7 @@ namespace DataAccess.Layer.Migrations
                 {
                     b.HasOne("Entity.Layer.Concrete.TableArea", "TableArea")
                         .WithMany("Tables")
-                        .HasForeignKey("TableAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TableAreaId");
 
                     b.Navigation("TableArea");
                 });

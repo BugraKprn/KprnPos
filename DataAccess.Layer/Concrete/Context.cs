@@ -25,6 +25,7 @@ namespace DataAccess.Layer.Concrete
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<TableArea> TableAreas { get; set; }
         public DbSet<Setting> Settings { get; set; }
     }
 }

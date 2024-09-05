@@ -1,0 +1,227 @@
+﻿@{
+    ViewData["Title"] = "Masa Ve Bölge Yönetimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .page-header {
+            margin-bottom: 5px;
+        }
+
+        .description {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-tableAndArea {
+            background: 0 0;
+            border: 0;
+            box-shadow: none;
+            color: #d32f2f;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .regions-list {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .region-box {
+            background: #E9E9E9;
+            padding: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            min-width: 150px;
+            max-width: 300px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .region-box.active {
+                border-bottom: 2px solid black;
+            }
+
+        .drop-area {
+            width: 1150px;
+            height: 1000px;
+            background-color: #F3F3F3;
+            border: 2px dashed #ccc;
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .draggable-box {
+            position: absolute;
+            cursor: move;
+            width: 170px;
+            height: 170px;
+            background-color: transparent;
+            border-radius: 5px;
+        }
+
+        .table-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .table-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .table-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            font-weight: bold;
+        }
+
+        .scrollable-content {
+            height: 450px;
+            overflow-y: scroll;
+        }
+    </style>
+}
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div style="display:flex; align-items:center; gap: 5px;">
+                <h4 style="margin: 0;">Tanımlamalar</h4>><h6 style="margin: 0; font-weight: normal;">Masa Ve Bölgeler</h6>
+            </div>
+        </div>
+        <p class="description">Restoranınıza ait masa ve bölgeleri bu ekrandan düzenleyebilirsiniz.</p>
+
+        <div class="card">
+            <!-- Butonlar -->
+            <div class="button-container">
+                <button class="btn-tableAndArea"><i class="fa-solid fa-plus"></i> Yeni Bölge Ekle</button>
+                <button class="btn-tableAndArea"><i class="fa-solid fa-table-cells-large"></i> Bölgeleri Düzenle</button>
+                <button class="btn-tableAndArea"><i class="fa-solid fa-arrow-up-wide-short"></i> Bölgeleri Sırala</button>
+                <button class="btn-tableAndArea"><i class="fa-solid fa-check-double"></i> Bölge Düzenini Sıfırla</button>
+                <button class="btn-tableAndArea"><i class="fa-solid fa-table-cells"></i> Toplu Masa Ekleme</button>
+                <button class="btn-tableAndArea"><i class="fa-solid fa-plus"></i> Yeni Masa Ekle</button>
+            </div>
+
+            <div class="scrollable-content">
+                <div class="card-body">
+                    <!-- Bölge Listeleme -->
+                    <div class="regions-list">
+                        @foreach (var area in Model.TableAreas)
+                        {
+                            <div class="region-box" data-id="@area.TableAreaId">@area.AreaName</div>
+                        }
+                    </div>
+                    <div class="drop-area"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.slimscroll/1.3.8/jquery.slimscroll.min.js"></script>
+
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                // Sayfa yüklendiğinde masaları yükle
+                $.ajax({
+                    method: 'GET',
+                    url: '/Table/List',
+                    success: function (tables) {
+                        // Masaları ekranda yerleştir
+                        tables.forEach(function (table) {
+                            var tableElement = $('<div class="draggable-box" data-id="' + table.tableId + '"></div>');
+                            tableElement.css({
+                                left: table.posX + 'px',
+                                top: table.posY + 'px'
+                            });
+                            tableElement.html(`
+                            <div class="table-content">
+                                <img src="/img/table.png" alt="Masa" class="table-image">
+                                <span class="table-text">${table.tableName}</span>
+                            </div>
+                        `);
+                            $('.drop-area').append(tableElement);
+                        });
+
+                        // Masaları sürüklenebilir hale getir
+                        $(".draggable-box").draggable({
+                            containment: ".drop-area",
+                            stop: function (event, ui) {
+                                var posX = ui.position.left;
+                                var posY = ui.position.top;
+                                var tableId = $(this).data('id');
+
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '/Table/UpdateTablePosition',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        tableId: tableId,
+                                        posX: posX,
+                                        posY: posY
+                                    }),
+                                    success: function (response) {
+                                        console.log('Pozisyon güncellendi.');
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Pozisyon güncellenirken hata oluştu:', error);
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Masalar yüklenirken hata oluştu:', error);
+                    }
+                });
+            });
+
+        });
+
+
+        $(document).ready(function () {
+            $('#scrollable-content').slimScroll({
+                height: '800px' // Kaydırıcı yüksekliği
+            });
+        });
+
+
+    </script>
+}

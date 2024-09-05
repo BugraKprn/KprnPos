@@ -4,6 +4,7 @@ using DataAccess.Layer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Layer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240905092012_mig_edit_Table_PosX_and_PosY")]
+    partial class mig_edit_Table_PosX_and_PosY
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -390,10 +392,10 @@ namespace DataAccess.Layer.Migrations
                     b.Property<string>("IsOccupied")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PosX")
+                    b.Property<double?>("PosX")
                         .HasColumnType("float");
 
-                    b.Property<double>("PosY")
+                    b.Property<double?>("PosY")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("StartDate")
