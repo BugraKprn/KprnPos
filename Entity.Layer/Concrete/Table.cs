@@ -14,6 +14,7 @@ namespace Entity.Layer.Concrete
         public string? TableName { get; set; }
         public string? IsOccupied { get; set; }
         public DateTime? StartDate { get; set; } = DateTime.Now;
+        public string? Shape { get; set; }
 
         // Bölge ile ilişki
         public int TableAreaId { get; set; }

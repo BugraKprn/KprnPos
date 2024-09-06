@@ -14,19 +14,11 @@ namespace KprnRestaurantPos.Controllers
     public class TableController : Controller
     {
         Context context = new Context();
-        TableManager tableManager = new TableManager(new EfTableDal());
 
-        [Route("/Pos/Table")]
+        [Route("/Pos/Table-Area")]
         public IActionResult Index()
         {
-            var values = context.Tables.ToList();
-            return View(values);
-        }
-
-        [Route("/Pos/TableAndArea")]
-        public IActionResult Index1()
-        {
-            var tableAreas = context.TableAreas.ToList();
+            var tableAreas = context.TableAreas.OrderBy(ta => ta.AreaOrder).ToList();
             var tables = context.Tables.ToList();
 
             var model = new TableAndAreaViewModel
@@ -38,6 +30,140 @@ namespace KprnRestaurantPos.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult GetTablesByArea(int areaId)
+        {
+            var tables = context.Tables
+                                 .Where(t => t.TableAreaId == areaId)
+                                 .ToList();
+
+            return Json(tables);
+        }
+
+
+        #region Area
+
+        [HttpGet]
+        public IActionResult GetRegions()
+        {
+            var regions = context.TableAreas.Select(r => new
+            {
+                r.TableAreaId,
+                r.AreaName,
+                r.AreaOrder
+            }).OrderBy(ta => ta.AreaOrder).ToList();
+
+            return Json(regions);
+        }
+
+        [HttpPost]
+        public IActionResult AddRegion(string regionName)
+        {
+            if (!string.IsNullOrEmpty(regionName))
+            {
+                // Yeni bir bölge oluşturun ve veritabanına kaydedin
+                var newArea = new TableArea
+                {
+                    AreaName = regionName
+                };
+
+                context.TableAreas.Add(newArea);
+                context.SaveChanges(); // Değişiklikleri kaydedin
+
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false, message = "Bölge adı boş olamaz." });
+        }
+
+        [HttpGet]
+        public IActionResult GetRegionById(int id)
+        {
+            // Veritabanından bölgeyi bul
+            var area = context.TableAreas.FirstOrDefault(r => r.TableAreaId == id);
+
+            if (area == null)
+            {
+                return NotFound(); // Bölge bulunamazsa 404 döner
+            }
+
+            // JSON formatında bölge bilgisini döner
+            return Json(new
+            {
+                id = area.TableAreaId,
+                areaName = area.AreaName
+            });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateRegion([FromBody] EditAreaDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Veritabanından güncellenmesi gereken bölgeyi bul
+                var area = context.TableAreas.FirstOrDefault(r => r.TableAreaId == model.AreaId);
+
+                if (area == null)
+                {
+                    return NotFound(); // Bölge bulunamazsa 404 döner
+                }
+
+                // Bölge adını güncelle
+                area.AreaName = model.AreaName;
+
+                // Değişiklikleri veritabanına kaydet
+                context.SaveChanges();
+
+                return Ok(); // Başarılı işlem sonucu 200 döner
+            }
+
+            return BadRequest(); // Model geçerli değilse 400 döner
+        }
+
+        [HttpPost]
+        public IActionResult UpdateRegionOrder([FromBody] List<int> orderedIds)
+        {
+            if (orderedIds == null || !orderedIds.Any())
+            {
+                return BadRequest("Geçersiz veri.");
+            }
+
+            try
+            {
+                UpdateRegionsOrder(orderedIds);
+                return Ok("Sıralama başarıyla güncellendi.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
+        }
+
+
+        private void UpdateRegionsOrder(List<int> orderedIds)
+        {
+            using (var context = new Context())
+            {
+                for (int i = 0; i < orderedIds.Count; i++)
+                {
+                    var regionId = orderedIds[i];
+                    var region = context.TableAreas.Find(regionId);
+                    if (region != null)
+                    {
+                        region.AreaOrder = i + 1; // Sıfırdan başlaması yerine 1'den başlasın
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+
+
+
+        #endregion
+
+
+        #region Table
 
         [HttpGet]
         public IActionResult List()
@@ -45,7 +171,6 @@ namespace KprnRestaurantPos.Controllers
             var tables = context.Tables.ToList();
             return Ok(tables);
         }
-
 
         [HttpPost]
         public IActionResult UpdateTablePosition([FromBody] TablePositionUpdateDto model)
@@ -72,9 +197,6 @@ namespace KprnRestaurantPos.Controllers
 
             return BadRequest(); // Geçersiz model durumu
         }
-
-
-
 
         [HttpGet]
         public IActionResult GetTableById(int tableid)
@@ -106,8 +228,11 @@ namespace KprnRestaurantPos.Controllers
             var table = context.Tables.FirstOrDefault(x => x.TableId == id);
             context.Tables.Remove(table);
             context.SaveChanges();
-            return Json(new { sucess = true, message = "Başarılı"});
+            return Json(new { sucess = true, message = "Başarılı" });
         }
+
+        #endregion
+
 
     }
 }
