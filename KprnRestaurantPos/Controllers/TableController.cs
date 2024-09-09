@@ -139,7 +139,6 @@ namespace KprnRestaurantPos.Controllers
             }
         }
 
-
         private void UpdateRegionsOrder(List<int> orderedIds)
         {
             using (var context = new Context())
@@ -156,9 +155,6 @@ namespace KprnRestaurantPos.Controllers
                 context.SaveChanges();
             }
         }
-
-
-
 
         #endregion
 
@@ -199,12 +195,21 @@ namespace KprnRestaurantPos.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTableById(int tableid)
+        public IActionResult GetTableById(int tableId)
         {
-            var findTable = context.Tables.FirstOrDefault(x => x.TableId == tableid);
-            var jsonWriters = JsonConvert.SerializeObject(findTable);
-            return Json(jsonWriters);
+            // Veritabanından masa bilgisini al
+            var findTable = context.Tables.FirstOrDefault(x => x.TableId == tableId);
+
+            // Masa bulunamadıysa NotFound döndür
+            if (findTable == null)
+            {
+                return NotFound();
+            }
+
+            // Masa bilgisini JSON olarak döndür
+            return Json(findTable);
         }
+
 
         [HttpPost]
         public IActionResult Add(Table table)
@@ -214,14 +219,36 @@ namespace KprnRestaurantPos.Controllers
             return Json(new { sucess = true, message = "Başarılı" });
         }
 
-        public IActionResult Update(Table t)
+        [HttpPost]
+        public IActionResult Update([FromBody] TableEditDto tableEditDto)
         {
-            var table = context.Tables.FirstOrDefault(x => x.TableId == t.TableId);
-            table.TableName = t.TableName;
-            context.SaveChanges();
-            var jsonTable = JsonConvert.SerializeObject(t);
-            return Json(new { sucess = true, message = "Başarılı" });
+            if (tableEditDto == null || !ModelState.IsValid)
+            {
+                return BadRequest("Geçersiz masa bilgileri.");
+            }
+
+            var table = context.Tables.FirstOrDefault(x => x.TableId == tableEditDto.TableId);
+            if (table == null)
+            {
+                return NotFound("Masa bulunamadı.");
+            }
+
+            // Masanın bilgilerini güncelle
+            table.TableName = tableEditDto.TableName;
+            table.Shape = tableEditDto.TableShape;
+
+            try
+            {
+                context.SaveChanges(); // Veritabanı değişikliklerini kaydet
+                return Ok("Masa başarıyla güncellendi.");
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda loglama yapabilirsiniz
+                return StatusCode(500, $"Bir hata oluştu: {ex.Message}");
+            }
         }
+
 
         public IActionResult Delete(int id)
         {
@@ -229,6 +256,45 @@ namespace KprnRestaurantPos.Controllers
             context.Tables.Remove(table);
             context.SaveChanges();
             return Json(new { sucess = true, message = "Başarılı" });
+        }
+
+        [HttpPost]
+        public IActionResult BulkAddTables([FromBody] TableBulkAddDto request)
+        {
+            if (request == null || request.TableCount <= 0 || string.IsNullOrEmpty(request.TableName) || string.IsNullOrEmpty(request.TableShape) || request.TableAreaId <= 0)
+            {
+                return BadRequest("Geçersiz veri.");
+            }
+
+            try
+            {
+                // Masaları ekleme işlemi
+                AddBulkTables(request.TableName, request.TableCount, request.TableShape, request.TableAreaId);
+                return Ok("Masalar başarıyla eklendi.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
+        }
+
+        private void AddBulkTables(string tableName, int tableCount, string tableShape, int areaId)
+        {
+            using (var context = new Context())
+            {
+                for (int i = 0; i < tableCount; i++)
+                {
+                    var table = new Table
+                    {
+                        TableName = tableName + " " + "(Yeni)",
+                        Shape = tableShape,
+                        TableAreaId = areaId,
+                        IsOccupied = "Boş"
+                    };
+                    context.Tables.Add(table);
+                }
+                context.SaveChanges();
+            }
         }
 
         #endregion
